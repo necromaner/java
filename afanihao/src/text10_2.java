@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -15,9 +17,16 @@ public class text10_2 {
     public text10_2(double radius){
         this.radius=radius;
     }
-    public text10_2(double radius,double x,double y){
-        this.radius=radius;
-        this.x=x;
-        this.y=y;
+    public text10_2(double radius,double x,double y) {
+        this.radius = radius;
+        this.x = x;
+        this.y = y;
     }
+    public text10_2 ( double radius ,text10_3 p)
+    {
+        this.x = p.x;
+        this.y = p.y;
+        this.radius = radius;
+    }
+    
 }
