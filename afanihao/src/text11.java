@@ -71,5 +71,7 @@ public class text11 {
         System.out.println("正方形面积："+Square.area());
     
         System.out.println("\n\n给前面的 Triangle类添加toString()方法，并输出出来。");
+        text11_9 text11_9=new text11_9(2,3,4);
+        System.out.println(text11_9);
     }
 }
