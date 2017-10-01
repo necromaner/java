@@ -24,7 +24,7 @@ public class text8_3 {
             }else
                 strs[1]="1";
         }
-        aaa[0] = Integer.parseInt(strs[0]);
+        aaa[0] = Integer.parseInt(strs[0]);//String转int
         aaa[1] = Integer.parseInt(strs[1]);
         if(aaa[1]<0){
             aaa[0]=-aaa[0];
@@ -56,7 +56,7 @@ public class text8_3 {
         if(fenzi==0||fenmu==0)
             return "错误";
         return zuijian(fenzi,fenmu);
-    }
+}
     public String addition(){
         int[] strs11=fen(fraction1);
         int[] strs22=fen(fraction2);
