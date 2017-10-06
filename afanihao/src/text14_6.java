@@ -18,8 +18,8 @@ public class text14_6 {
     public int max;
     private int answer;
     private int read;
-    private boolean bbb=true;
-    private int tihao=0;
+    private boolean bbb = true;
+    private int tihao = 0;
     
     public text14_6() {
         this.min = 0;
@@ -67,29 +67,28 @@ public class text14_6 {
         c = random.nextInt(3);
         switch (c) {
             case 0:
-                System.out.print("第"+tihao+"题： " + a + "+" + b + "=");
+                System.out.print("第" + tihao + "题： " + a + "+" + b + "=");
                 answer = a + b;
                 break;
             case 1:
-                System.out.print("第"+tihao+"题： " + a + "-" + b + "=");
+                System.out.print("第" + tihao + "题： " + a + "-" + b + "=");
                 answer = a - b;
                 break;
             case 2:
-                System.out.print("第"+tihao+"题： " + a + "*" + b + "=");
+                System.out.print("第" + tihao + "题： " + a + "*" + b + "=");
                 answer = a * b;
                 break;
         }
     }
-    public int ReadTest(){
+    public int ReadTest() {
         //System.out.println("ReadTest, Please Enter Data:");
         InputStreamReader is = new InputStreamReader(System.in); //new构造InputStreamReader对象
         BufferedReader br = new BufferedReader(is); //拿构造的方法传到BufferedReader中
-        try{ //该方法中有个IOExcepiton需要捕获
+        try { //该方法中有个IOExcepiton需要捕获
             String name = br.readLine();
             read = Integer.parseInt(name);
-        //    System.out.println("ReadTest Output:" + read);
-        }
-        catch(IOException e){
+            //    System.out.println("ReadTest Output:" + read);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return read;
