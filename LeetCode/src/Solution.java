@@ -19,19 +19,47 @@ public class Solution {
         }
         return answer;
     }
+    
     public int reverse(int x) {//7. Reverse Integer
-        int fuhao=1;
-        if(x<0){
-            x=-x;
-            fuhao=-1;
+        int punctuation = 1;
+        if (x < 0) {
+            x = -x;
+            punctuation = -1;
         }
-        int y=0;
-        while (x>=1) {
+        int y = 0;
+        while (x >= 1) {
             if ((Integer.MAX_VALUE / 10 < y) || (Integer.MAX_VALUE / 10 == y && Integer.MAX_VALUE % 10 < x))//if out of the range
                 return 0;
             y = y * 10 + x % 10;
             x /= 10;
         }
-        return y*fuhao;
+        return y * punctuation;
+    }
+    
+    public int lengthOfLongestSubstring(String s) {//3. Longest Substring Without Repeating Characters
+        if (s.length() == 0) {
+            return 0;
+        }
+        int max = 1;
+        lableC:
+        for (int i = 0; i < s.length() - 1; i++) {
+            if (s.charAt(i) != s.charAt(i + 1)) {
+                lableB:
+                for (int j = i + 1; j < s.length(); j++) {
+                    int answer = 1;
+                    lableA:
+                    for (int k = i; k < j; k++) {
+                        if (s.charAt(j) == s.charAt(k)) {
+                            break lableB;
+                        }
+                        answer++;
+                    }
+                    if (max < answer) {
+                        max = answer;
+                    }
+                }
+            }
+        }
+        return max;
     }
 }
