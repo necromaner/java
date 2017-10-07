@@ -62,4 +62,16 @@ public class Solution {
         }
         return max;
     }
+    public String longestPalindrome(String s) {
+        String maxString="";
+        if(s.length()==0){
+            return maxString;
+        }
+        for (int i = 0; i < s.length()-1; i++) {
+            for (int j = i+1; j < s.length(); j++) {
+                
+            }
+        }
+        return maxString;
+    }
 }
