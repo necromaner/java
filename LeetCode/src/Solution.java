@@ -71,8 +71,8 @@ public class Solution {
         3.找到所求字符中最小的位置和最大的位置
         4.输出
          */
-        String maxString ="";
-        if(s.length()>1000){
+        String maxString = "";
+        if (s.length() > 1000) {
             return maxString;
         }
         maxString = String.valueOf(s.charAt(0));
@@ -94,11 +94,11 @@ public class Solution {
             if (heart % 2 == 0) {
                 middle += heart / 2 - 0.5;
             } else {
-                middle += heart/2;
+                middle += heart / 2;
             }
-            i += heart-1;
+            i += heart - 1;
             int min = (int) (middle - heart / 2 + 0.5);
-            int max = (int) (middle + heart / 2 );
+            int max = (int) (middle + heart / 2);
             lableC:
             while (min > 0 && max < s.length() - 1) {
                 if (s.charAt(min - 1) != s.charAt(max + 1)) {
@@ -106,33 +106,79 @@ public class Solution {
                 }
                 min--;
                 max++;
-                heart+=2;
+                heart += 2;
             }
             if (maxLong < heart) {
                 maxLong = heart;
-                maxString=s.substring(min,max+1);
+                maxString = s.substring(min, max + 1);
             }
         }
         return maxString;
     }
+    
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {//4. Median of Two Sorted Arrays
-        double answer=0;
-        int[] longmax=new int[nums1.length+nums2.length];
+        double answer = 0;
+        int[] longmax = new int[nums1.length + nums2.length];
         //int longnum=nums1.length+nums2.length;
         for (int i = 0; i < longmax.length; i++) {
-            if (i<nums1.length){
-                longmax[i]=nums1[i];
-            }else {
-                longmax[i]=nums2[i-nums1.length];
+            if (i < nums1.length) {
+                longmax[i] = nums1[i];
+            } else {
+                longmax[i] = nums2[i - nums1.length];
             }
         }
-        double longmaxlength=longmax.length;
-        double length=longmaxlength/2+0.5;
-        int min= (int) (length-1);
-        int max= (int) (length+0.5-1);
+        double longmaxlength = longmax.length;
+        double length = longmaxlength / 2 + 0.5;
+        int min = (int) (length - 1);
+        int max = (int) (length + 0.5 - 1);
         Arrays.sort(longmax);
-        answer=longmax[min]+longmax[max];
-//        System.out.println(length+" "+min+" "+max);
-        return answer/2;
+        answer = longmax[min] + longmax[max];
+        return answer / 2;
+    }
+    
+    public int maxProfit(int[] prices) {//121. Best Time to Buy and Sell Stock
+        if (prices == null || prices.length < 1) {
+            return 0;
+        }
+        int maxprices = 0;
+        int min = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            if (min > prices[i]) {
+                min = prices[i];
+            } else {
+                if (maxprices < prices[i] - min) {
+                    maxprices = prices[i] - min;
+                }
+            }
+        }
+        return maxprices;
+    }
+    public int maxProfit1(int[] prices) {//121. Best Time to Buy and Sell Stock
+        if (prices == null || prices.length < 1) {
+            return 0;
+        }
+        int maxprices = 0;
+        int min = prices[0];
+        int max=0;
+        for (int i = 1; i < prices.length; i++) {
+            if (min > prices[i]) {
+                min = prices[i];
+            } else {
+                if (maxprices < prices[i] - min) {
+                    maxprices = prices[i] - min;
+                }
+                if(i+1<=prices.length-1) {
+                    if (prices[i] > prices[i + 1]) {
+                        max += maxprices;
+                        maxprices=0;
+                        min=prices[i+1];
+                    }
+                }
+                if(i==prices.length-1){
+                    max += maxprices;
+                }
+            }
+        }
+        return max;
     }
 }
