@@ -26,7 +26,7 @@ Output: "bb"
 public class Leetcode_4_5_LongestPalindromicSubstring {
     public static void main(String[] args) {
         Solution solution=new Solution();
-        String s="pwwp";
+        String s="ccc";
         System.out.println(s+" longest palindromic substring is "+solution.longestPalindrome(s));
     }
 }

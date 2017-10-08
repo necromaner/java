@@ -62,15 +62,71 @@ public class Solution {
         }
         return max;
     }
+    
     public String longestPalindrome(String s) {
-        String maxString="";
-        if(s.length()==0){
+        /*
+        1.以i为中心
+        2.判断i后面一样的字符，中心点为middle
+         */
+//        System.out.println("s长度 "+s.length());
+        String maxString ="";
+        if(s.length()>1000){
             return maxString;
         }
-        for (int i = 0; i < s.length()-1; i++) {
-            for (int j = i+1; j < s.length(); j++) {
-                
+        maxString = String.valueOf(s.charAt(0));
+        if (s.length() == 0) {
+            return maxString;
+        }
+        int maxLong = 0;//最大长度
+        lableB:
+        for (int i = 0; i < s.length() - 1; i++) {//以i为中心
+            double middle = i;//中心点
+            int heart = 1;//中心一样的数量
+            lableA:
+            for (int j = i + 1; j < s.length(); j++) {//找中心一样的数量
+                while (s.charAt(i) != s.charAt(j)) {
+                    System.out.println("s.charAt(i) != s.charAt(j)   "+s.charAt(i)+" "+s.charAt(j)+" "+i+" "+j);
+                    break lableA;
+                }
+                heart++;
+                System.out.println("--中心一样的数量heart = " + heart);
             }
+            if (heart % 2 == 0) {
+                middle += heart / 2 - 0.5;
+                System.out.println("1中心点middle = " + middle);
+            } else {
+                middle += heart-1;
+                System.out.println("2中心点middle = " + middle);
+            }
+            i += heart-1;
+            System.out.println("i = " + i);
+            int min = (int) (middle - heart / 2 + 0.5);
+            int max = (int) (middle + heart / 2 );
+            System.out.println("min = " + min);
+            System.out.println("max = " + max);
+            lableC:
+            while (min > 0 && max < s.length() - 1) {
+                if (s.charAt(min - 1) != s.charAt(max + 1)) {//cbbbd
+                    break lableC;
+                }
+                min--;
+                max++;
+                heart+=2;
+                System.out.println("--min = " + min);
+                System.out.println("--max = " + max);
+                System.out.println("--heart = "+heart);
+            }
+            System.out.println("maxLong = "+maxLong);
+            System.out.println("heart = "+heart);
+//            if (maxLong < heart) {
+//                maxLong = heart;
+//                maxString = "";
+//                for (int j = min; j <= max; j++) {
+//                    maxString += s.charAt(j);
+//                }
+//                System.out.println("maxString = "+maxString);
+//            }
+            System.out.println("--------------------------");
         }
         return maxString;
     }
