@@ -22,6 +22,13 @@ public class text {
         double middle=1;
         middle=heart/2;
         System.out.println(heart+" "+middle);
+        String sss="asdfghjkl";
+        System.out.println(sss.substring(1,3));
+        double dd=5;
+        double aa=dd/2+0.5;
+        int aaa= (int) (aa);
+        int bbb= (int) (aa+0.5);
+        System.out.println(aa+" "+aaa+" "+bbb);
     }
     
 }

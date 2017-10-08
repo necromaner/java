@@ -18,7 +18,7 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 
  */
-public class Leetcode_1_1_TwoSum {
+public class Leetcode_1_1_TwoSum {//完成
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
         int target = 9;

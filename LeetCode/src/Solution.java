@@ -5,6 +5,7 @@
  * Date: 2017-10-05
  * Time: 下午5:57
  */
+import java.util.Arrays;
 public class Solution {
     public int[] twoSum(int[] nums, int target) {//1. Two Sum
         int[] answer = new int[2];
@@ -63,12 +64,13 @@ public class Solution {
         return max;
     }
     
-    public String longestPalindrome(String s) {
+    public String longestPalindrome(String s) {//5. Longest Palindromic Substring
         /*
         1.以i为中心
-        2.判断i后面一样的字符，中心点为middle
+        2.判断i后面一样的字符，中心点为middle,把i变大中心一样的数量-1（减少运算次数）
+        3.找到所求字符中最小的位置和最大的位置
+        4.输出
          */
-//        System.out.println("s长度 "+s.length());
         String maxString ="";
         if(s.length()>1000){
             return maxString;
@@ -85,49 +87,52 @@ public class Solution {
             lableA:
             for (int j = i + 1; j < s.length(); j++) {//找中心一样的数量
                 while (s.charAt(i) != s.charAt(j)) {
-                    System.out.println("s.charAt(i) != s.charAt(j)   "+s.charAt(i)+" "+s.charAt(j)+" "+i+" "+j);
                     break lableA;
                 }
                 heart++;
-                System.out.println("--中心一样的数量heart = " + heart);
             }
             if (heart % 2 == 0) {
                 middle += heart / 2 - 0.5;
-                System.out.println("1中心点middle = " + middle);
             } else {
-                middle += heart-1;
-                System.out.println("2中心点middle = " + middle);
+                middle += heart/2;
             }
             i += heart-1;
-            System.out.println("i = " + i);
             int min = (int) (middle - heart / 2 + 0.5);
             int max = (int) (middle + heart / 2 );
-            System.out.println("min = " + min);
-            System.out.println("max = " + max);
             lableC:
             while (min > 0 && max < s.length() - 1) {
-                if (s.charAt(min - 1) != s.charAt(max + 1)) {//cbbbd
+                if (s.charAt(min - 1) != s.charAt(max + 1)) {
                     break lableC;
                 }
                 min--;
                 max++;
                 heart+=2;
-                System.out.println("--min = " + min);
-                System.out.println("--max = " + max);
-                System.out.println("--heart = "+heart);
             }
-            System.out.println("maxLong = "+maxLong);
-            System.out.println("heart = "+heart);
-//            if (maxLong < heart) {
-//                maxLong = heart;
-//                maxString = "";
-//                for (int j = min; j <= max; j++) {
-//                    maxString += s.charAt(j);
-//                }
-//                System.out.println("maxString = "+maxString);
-//            }
-            System.out.println("--------------------------");
+            if (maxLong < heart) {
+                maxLong = heart;
+                maxString=s.substring(min,max+1);
+            }
         }
         return maxString;
+    }
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {//4. Median of Two Sorted Arrays
+        double answer=0;
+        int[] longmax=new int[nums1.length+nums2.length];
+        //int longnum=nums1.length+nums2.length;
+        for (int i = 0; i < longmax.length; i++) {
+            if (i<nums1.length){
+                longmax[i]=nums1[i];
+            }else {
+                longmax[i]=nums2[i-nums1.length];
+            }
+        }
+        double longmaxlength=longmax.length;
+        double length=longmaxlength/2+0.5;
+        int min= (int) (length-1);
+        int max= (int) (length+0.5-1);
+        Arrays.sort(longmax);
+        answer=longmax[min]+longmax[max];
+//        System.out.println(length+" "+min+" "+max);
+        return answer/2;
     }
 }
