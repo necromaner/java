@@ -222,7 +222,7 @@ public class Solution {
     public int myAtoi(String str) {//8. String to Integer (atoi)
         int answer = 0;
         String answer1 = "";
-        boolean symbol= true;
+        boolean symbol = true;
         boolean symbolSwitch = true;
         boolean number = false;
         int min = 0;
@@ -236,17 +236,17 @@ public class Solution {
             }
             if (symbolSwitch) {//判断第一个是否为符号
                 if (str.charAt(i) == '-' || str.charAt(i) == '+') {
-                    if(str.charAt(i)=='-'){
-                        symbol=false;
+                    if (str.charAt(i) == '-') {
+                        symbol = false;
                     }
-                    if(i+1>=str.length()){
+                    if (i + 1 >= str.length()) {
                         break;
                     }
                     i++;
                 }
                 symbolSwitch = false;
             }
-            if (str.charAt(i) >= '0'&&str.charAt(i) <= '9') {
+            if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
                 number = true;
             } else {
                 max = i;
@@ -258,10 +258,42 @@ public class Solution {
             try {
                 answer = Integer.parseInt(answer1);
                 return answer;
-            }catch (NumberFormatException e){//Number Format Exception:数字格式异常
+            } catch (NumberFormatException e) {//Number Format Exception:数字格式异常
                 return (symbol) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
         } else
             return 0;
+    }
+    
+    public String longestCommonPrefix(String[] strs) {//14. Longest Common Prefix
+        String answer = null;
+        if (strs == null || strs.length < 1) {
+            return "";
+        }
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        int min = strs[0].length();
+        int minlocation = 0;
+        for (int i = 1; i < strs.length; i++) {
+            if (min > strs[i].length()) {
+                min = strs[i].length();
+                minlocation = i;
+            }
+        }
+        int max=0;
+        lB:
+        for (int i = 0; i < min; i++) {
+            lA:
+            for (int j = 0; j < strs.length; j++) {
+                if (strs[j].charAt(i) != strs[minlocation].charAt(i)) {
+                    break lB;
+                }
+            }
+            max++;
+        }
+        answer = strs[minlocation].substring(0, max);
+        System.out.println(max);
+        return answer;
     }
 }
