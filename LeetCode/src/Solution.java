@@ -153,13 +153,14 @@ public class Solution {
         }
         return maxprices;
     }
+    
     public int maxProfit1(int[] prices) {//121. Best Time to Buy and Sell Stock
         if (prices == null || prices.length < 1) {
             return 0;
         }
         int maxprices = 0;
         int min = prices[0];
-        int max=0;
+        int max = 0;
         for (int i = 1; i < prices.length; i++) {
             if (min > prices[i]) {
                 min = prices[i];
@@ -167,18 +168,97 @@ public class Solution {
                 if (maxprices < prices[i] - min) {
                     maxprices = prices[i] - min;
                 }
-                if(i+1<=prices.length-1) {
+                if (i + 1 <= prices.length - 1) {
                     if (prices[i] > prices[i + 1]) {
                         max += maxprices;
-                        maxprices=0;
-                        min=prices[i+1];
+                        maxprices = 0;
+                        min = prices[i + 1];
                     }
                 }
-                if(i==prices.length-1){
+                if (i == prices.length - 1) {
                     max += maxprices;
                 }
             }
         }
         return max;
+    }
+    
+    public int maxSubArray(int[] nums) {//53. Maximum Subarray
+        if (nums == null || nums.length < 1) {
+            return 0;
+        }
+        int len = nums.length;
+        if (len == 1)
+            return nums[0];
+    
+        int sum0 = nums[0];
+        int sum1 = nums[0];
+        for (int i = 0; i < nums.length; i++) {
+            System.out.print(nums[i] + " ");
+        }
+        System.out.println("");
+        for (int i = 1; i < len; i++) {
+            System.out.println("---------------------");
+            if (sum1 >= 0) {
+                System.out.println("sum1-1 = " + sum1);
+                System.out.println("nums[i]1 = " + nums[i]);
+                sum1 = sum1 + nums[i];
+                System.out.println("sum1 = " + sum1);
+            } else {
+                System.out.println("sum1-2 = " + sum1);
+                System.out.println("nums[i]2 = " + nums[i]);
+                sum1 = nums[i];
+                System.out.println("sum1 = " + sum1);
+            }
+            System.out.println("sum0 = " + sum0);
+            if (sum1 > sum0) {
+                sum0 = sum1;
+                System.out.println("sum = " + sum0);
+            }
+        }
+        return sum0;
+    }
+    
+    public int myAtoi(String str) {
+        int answer = 0;
+        String answer1 = "";
+        boolean symbolSwitch = true;
+        boolean number = false;
+        int min = 0;
+        int max = str.length();
+        for (int i = 0; i < str.length(); i++) {
+            if (symbolSwitch) {//去除最前面空格
+                while (str.charAt(i) == ' ') {
+                    i++;
+                    min++;
+                }
+            }
+            if (symbolSwitch) {//判断第一个是否为符号
+                if (str.charAt(i) == '-' || str.charAt(i) == '+') {
+                    if(i+1>=str.length()){
+                        break;
+                    }
+                    i++;
+                }
+                symbolSwitch = false;
+            }
+            if (str.charAt(i) >= '0'&&str.charAt(i) <= '9') {
+                number = true;
+            } else {
+                max = i;
+                break;
+            }
+        }
+        if (number) {
+            answer1 = str.substring(min, max);
+            try {
+    
+                answer = Integer.parseInt(answer1);
+                return answer;
+            }catch (NumberFormatException e){
+                return 0;
+            }
+        } else
+            return 0;
     }
 }
