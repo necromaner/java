@@ -252,7 +252,6 @@ public class Solution {
         if (number) {
             answer1 = str.substring(min, max);
             try {
-    
                 answer = Integer.parseInt(answer1);
                 return answer;
             }catch (NumberFormatException e){
