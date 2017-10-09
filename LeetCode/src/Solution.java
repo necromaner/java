@@ -258,7 +258,7 @@ public class Solution {
             try {
                 answer = Integer.parseInt(answer1);
                 return answer;
-            }catch (NumberFormatException e){
+            }catch (NumberFormatException e){//Number Format Exception:数字格式异常
                 return (symbol) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
         } else

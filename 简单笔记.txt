@@ -4,3 +4,7 @@ final修饰的类不能被继承。
 Sting就是一个被final修饰的类，我们只能用，不用继承
 
 final不仅可以修饰类，还可以修饰变量，被final修饰的变量就是一个常量，只能赋值一次
+
+answer = Integer.parseInt(answer1);  String变int
+
+Integer.MAX_VALUE   Integer.MIN_VALUE  边界最大最小值
