@@ -219,9 +219,10 @@ public class Solution {
         return sum0;
     }
     
-    public int myAtoi(String str) {
+    public int myAtoi(String str) {//8. String to Integer (atoi)
         int answer = 0;
         String answer1 = "";
+        boolean symbol= true;
         boolean symbolSwitch = true;
         boolean number = false;
         int min = 0;
@@ -235,6 +236,9 @@ public class Solution {
             }
             if (symbolSwitch) {//判断第一个是否为符号
                 if (str.charAt(i) == '-' || str.charAt(i) == '+') {
+                    if(str.charAt(i)=='-'){
+                        symbol=false;
+                    }
                     if(i+1>=str.length()){
                         break;
                     }
@@ -255,7 +259,7 @@ public class Solution {
                 answer = Integer.parseInt(answer1);
                 return answer;
             }catch (NumberFormatException e){
-                return 0;
+                return (symbol) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
             }
         } else
             return 0;
