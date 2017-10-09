@@ -296,4 +296,7 @@ public class Solution {
         System.out.println(max);
         return answer;
     }
+    public boolean isMatch(String s, String p) {//10. Regular Expression Matching
+    return false;
+    }
 }
