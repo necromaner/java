@@ -28,8 +28,8 @@ isMatch("aab", "c*a*b") → true
 public class Leetcode_11_10_RegularExpressionMatching {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        String s = "aab";
-        String p = "c*a*b";
+        String s = "abcd";
+        String p = "d*a*c*c*b*c*d";
         System.out.println("isMatch(\""+s+"\", \""+p+"\") → "+ solution.isMatch(s,p));
     }
 }

@@ -281,7 +281,7 @@ public class Solution {
                 minlocation = i;
             }
         }
-        int max=0;
+        int max = 0;
         lB:
         for (int i = 0; i < min; i++) {
             lA:
@@ -296,7 +296,26 @@ public class Solution {
         System.out.println(max);
         return answer;
     }
+    
     public boolean isMatch(String s, String p) {//10. Regular Expression Matching
-    return false;
+        if (s.length() == 0 || p.length() == 0 || p.charAt(0) == '*') {
+            return false;
+        }
+        int Location = 0;//s位置符
+        lA:
+        for (int i = 0; i < p.length(); i++) {
+            if(p.length()-i>1){//后面还有至少一位
+                System.out.println("-----1-----");
+                if(s.charAt(Location)==p.charAt(i)) {
+                    if (p.charAt(i + 1) == '*') {
+                        
+                    }
+                }
+            }else {//后面只有一位
+                System.out.println("-----2-----");
+            }
+        }
+        return true;
     }
 }
+

@@ -29,14 +29,15 @@ public class text {
 //        int aaa= (int) (aa);
 //        int bbb= (int) (aa+0.5);
 //        System.out.println(aa+" "+aaa+" "+bbb);
-        String ss="q qwer";
-        String[] sss={"-","2"};
-        ss=ss+sss[0];
-        if(ss.charAt(0)==' '){
-            System.out.println("yes");
-        }
+        String ss="";
+//        String[] sss={"-","2"};
+//        ss=ss+sss[0];
+//        if(ss.charAt(0)==' '){
+//            System.out.println("yes");
+//        }
         //int a=Integer.parseInt(ss);
 //        System.out.println(ss);
+        System.out.println(ss.length());
     }
     
 }
