@@ -25,11 +25,11 @@ isMatch("aa", ".*") → true
 isMatch("ab", ".*") → true
 isMatch("aab", "c*a*b") → true
  */
-public class Leetcode_11_10_RegularExpressionMatching {
+public class Leetcode_11_10_RegularExpressionMatching {//抄
     public static void main(String[] args) {
         Solution solution = new Solution();
         String s = "abcd";
-        String p = "d*a*c*c*b*c*d";
+        String p = "d*a*c*c*b*c*cd";
         System.out.println("isMatch(\""+s+"\", \""+p+"\") → "+ solution.isMatch(s,p));
     }
 }

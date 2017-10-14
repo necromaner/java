@@ -298,24 +298,51 @@ public class Solution {
     }
     
     public boolean isMatch(String s, String p) {//10. Regular Expression Matching
-        if (s.length() == 0 || p.length() == 0 || p.charAt(0) == '*') {
-            return false;
+        //http://www.jianshu.com/p/85f3e5a9fcda
+        System.out.println("p = "+p);
+        System.out.println("s = "+s);
+        if (p.isEmpty()) {                              //条件1：p没有内容；//isEmpty:指出变量是否已经初始化
+            //p为空，看s会否也为空
+            //判断类型：p为空
+            System.out.println("------1------");
+            return s.isEmpty();                         //返回1:s是否有内容，有内容为false
         }
-        int Location = 0;//s位置符
-        lA:
-        for (int i = 0; i < p.length(); i++) {
-            if(p.length()-i>1){//后面还有至少一位
-                System.out.println("-----1-----");
-                if(s.charAt(Location)==p.charAt(i)) {
-                    if (p.charAt(i + 1) == '*') {
-                        
-                    }
-                }
-            }else {//后面只有一位
-                System.out.println("-----2-----");
+        
+        
+        if (p.length() == 1 || p.charAt(1) != '*') {    //条件2：如果p的长度为1或者p的第二个字符不为"*"
+            //p存在字符且p后不为"*"，
+            //判断类型：p的长度为1或ab aa
+            System.out.println("------2------");
+            if (s.isEmpty() || (p.charAt(0) != '.' && p.charAt(0) != s.charAt(0))) {//条件2-1：如果s中没有内容，或（p的第一个字符不为"."且p的第一个元素不等于s的第一个字符）
+                //1：s为空，p不为空；2：s的第一个字符与p的第一个字符不对应，如a b
+                //判断类型：s为空或b a
+                System.out.println("------2-1-----");
+                return false;                           //返回2-1：错误
+            } else {                                    //条件2-2：如果s中有内容，或（p的第一个字符为"."或s的第一个等于p的第一个字符）
+                //1:s和p都不为空；2：s的第一个字符与p的第一个字符对应，如a a,a .
+                //判断类型：a a或a .
+                System.out.println("------2-2-----");
+                return isMatch(s.substring(1), p.substring(1));//返回2-2：isMatch，s去掉前一个字符，p去掉前一个字符
             }
         }
-        return true;
+    
+        while (!s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')) {//条件3：如果s不为空且（s的第一个等于p的第一个字符或p的第一个字符为"."）
+            //s不为空且s的第一个字符与p的第一个字符对应，因为上一个的筛选，所有p的长度大于1且后面为*，如a a*,
+            //判断类型：ab a*，
+            System.out.println("------3开始------");
+            if (isMatch(s, p.substring(2))) {               //条件3-1：递归
+                //去掉p前两个字符，看是否带*有影响
+                //判断*给前面应有0个
+                //筛选类型：ab a*ab，
+                System.out.println("------3-1-----");
+                return true;
+            }
+            System.out.println("------3结束------");
+            s = s.substring(1);
+        }
+    
+        System.out.println("-------------");
+        return isMatch(s, p.substring(2));//返回：isMatch，s不变，p去掉前二个字符 //substring:java中截取字符串的一个方法
+        //执行类型：b a*，
     }
 }
-
