@@ -19,5 +19,23 @@ public class recursive {
         for (int i = 0; i < xx2.length; i++) {
             System.out.print(xx2[i]+" ");
         }
+    
+        System.out.println("\n\n\n递归实现回文判断（如：abcdedbca就是回文，判断一个面试者对递归理解的简单程序）");
+        String x3="abcdedbca";
+        System.out.print(x3+"："+r1.R3(x3,0,x3.length()-1));
+    
+    
+        System.out.println("\n\n分解成质因数(如435234=251*17*17*3*2，据说是华为笔试题)");
+        int x4=435234;
+        int[] x44=r1.R4(x4,1);
+        System.out.print(x4+"=");
+        for (int i = 0; i < xx2.length; i++) {
+            System.out.print(xx2[i]);
+            if (i!=xx2.length-1){
+                System.out.print("*");
+            }else if (i==xx2.length-1){
+                System.out.println("");
+            }
+        }
     }
 }
