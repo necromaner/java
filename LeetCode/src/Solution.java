@@ -6,6 +6,8 @@
  * Time: 下午5:57
  */
 import java.util.Arrays;
+
+
 public class Solution {
     public int[] twoSum(int[] nums, int target) {//1. Two Sum
         int[] answer = new int[2];
@@ -299,8 +301,8 @@ public class Solution {
     
     public boolean isMatch(String s, String p) {//10. Regular Expression Matching
         //http://www.jianshu.com/p/85f3e5a9fcda
-        System.out.println("p = "+p);
-        System.out.println("s = "+s);
+        System.out.println("p = " + p);
+        System.out.println("s = " + s);
         if (p.isEmpty()) {                              //条件1：p没有内容；//isEmpty:指出变量是否已经初始化
             //p为空，看s会否也为空
             //判断类型：p为空
@@ -344,5 +346,61 @@ public class Solution {
         System.out.println("-------------");
         return isMatch(s, p.substring(2));//返回：isMatch，s不变，p去掉前二个字符 //substring:java中截取字符串的一个方法
         //执行类型：b a*，
+        
+        
+    }
+    
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode(int x) { val = x; }
+     * }
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val > l2.val) {
+            ListNode tmp = l2;
+            tmp.next = mergeTwoLists(l1, l2.next);
+            return tmp;
+        } else {
+            ListNode tmp = l1;
+            tmp.next = mergeTwoLists(l1.next, l2);
+            return tmp;
+        }
+    }
+    
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(0);
+        int carry = 0;
+        ListNode pointer = result;
+        while (l1 != null || l2 != null) {
+            if (l1 != null) {
+                carry += l1.val;
+                l1 = l1.next;
+            }
+    
+            if (l2 != null) {
+                carry += l2.val;
+                l2 = l2.next;
+            }
+            pointer.next = new ListNode(carry % 10);
+            carry /= 10;
+            pointer = pointer.next;
+    
+        }
+        
+        if (carry > 0) {
+            pointer.next = new ListNode(carry);
+        }
+        
+        return result.next;
+    }
+    public String addBinary(String a, String b) {
+        
+        String answer="";
+        return answer;
     }
 }
