@@ -14,9 +14,9 @@ b = "1"
 Return "100".
  */
 public class Leetcode_14_67_AddBinary {
-    public static void main(String[] args) {
-        String a="11111";
-        String b="11111";
+    public static void main(String[] args) {//完成
+        String a="1101";
+        String b="11";
         Solution solution = new Solution();
         String c=solution.addBinary(a,b);
         System.out.println("a = "+a);

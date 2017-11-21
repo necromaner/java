@@ -372,7 +372,7 @@ public class Solution {
         }
     }
     
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {//2. Add Two Numbers
         ListNode result = new ListNode(0);
         int carry = 0;
         ListNode pointer = result;
@@ -395,12 +395,80 @@ public class Solution {
         if (carry > 0) {
             pointer.next = new ListNode(carry);
         }
-        
         return result.next;
     }
+    
     public String addBinary(String a, String b) {
-        
-        String answer="";
+        String answer = "";
+        if (a.length() == 0) {
+            return b;
+        }
+        if (b.length() == 0) {
+            return a;
+        }
+        String lmax = a.length() >= b.length() ? a : b;
+        char l1 = '0';//上一循环的进位，也是下一循环的本位
+        for (int i = 0; i < lmax.length(); i++) {
+            char ca = a.length() > i ? a.charAt(a.length() - i - 1) : '0';
+            char cb = b.length() > i ? b.charAt(b.length() - i - 1) : '0';
+            int sum = ca + cb + l1 - 144;
+            char l0 = '0';
+            switch (sum) {
+                case 0:
+                    l0 = '0';
+                    l1 = '0';
+                    break;
+                case 1:
+                    l0 = '1';
+                    l1 = '0';
+                    break;
+                case 2:
+                    l0 = '0';
+                    l1 = '1';
+                    break;
+                case 3:
+                    l0 = '1';
+                    l1 = '1';
+                    break;
+            }
+            answer = l0 + answer;
+        }
+        if (l1 == '1') {
+            answer = l1 + answer;
+        }
+        return answer;
+    }
+    
+    public int getSum(int a, int b) {
+        if (b >= 0)
+            for (int i = 0; i < b; i++)
+                a++;
+        else
+            for (int i = 0; i > b; i--)
+                a--;
+        return a;
+    }
+    public String addStrings(String num1, String num2) {
+        String answer = "";
+        if (num1.length() == 0) {
+            return num2;
+        }
+        if (num2.length() == 0) {
+            return num1;
+        }
+        String lmax = num1.length() >= num2.length() ? num1 : num2;
+        int l1 = 0;//上一循环的进位，也是下一循环的本位
+        for (int i = 0; i < lmax.length(); i++) {
+            char ca = num1.length() > i ? num1.charAt(num1.length() - i - 1) : '0';
+            char cb = num2.length() > i ? num2.charAt(num2.length() - i - 1) : '0';
+            int sum = ca + cb + l1-96;
+            l1=sum/10;
+            int l0=sum%10;
+            answer = String.valueOf(l0)+answer;
+        }
+        if (l1 >= 1&&l1<=9) {
+            answer = l1 + answer;
+        }
         return answer;
     }
 }
