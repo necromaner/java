@@ -448,7 +448,8 @@ public class Solution {
                 a--;
         return a;
     }
-    public String addStrings(String num1, String num2) {
+    
+    public String addStrings(String num1, String num2) {//415.Add Strings
         String answer = "";
         if (num1.length() == 0) {
             return num2;
@@ -461,14 +462,48 @@ public class Solution {
         for (int i = 0; i < lmax.length(); i++) {
             char ca = num1.length() > i ? num1.charAt(num1.length() - i - 1) : '0';
             char cb = num2.length() > i ? num2.charAt(num2.length() - i - 1) : '0';
-            int sum = ca + cb + l1-96;
-            l1=sum/10;
-            int l0=sum%10;
-            answer = String.valueOf(l0)+answer;
+            int sum = ca + cb + l1 - 96;
+            l1 = sum / 10;
+            int l0 = sum % 10;
+            answer = String.valueOf(l0) + answer;
         }
-        if (l1 >= 1&&l1<=9) {
+        if (l1 >= 1 && l1 <= 9) {
             answer = l1 + answer;
         }
         return answer;
+    }
+    
+    public String multiply(String num1, String num2) {//43. Multiply Strings
+        if (num1.length() == 0 || num2.equals("0")) {
+            return num2;
+        }
+        if (num2.length() == 0 || num1.equals("0")) {
+            return num1;
+        }
+        String[] sa = num1.split("");
+        String[] sb = num2.split("");
+        int[] answer = new int[sa.length + sb.length];
+        for (int i = 0; i < sa.length; i++) {
+            for (int j = 0; j < sb.length; j++) {
+                char ca = sa[sa.length-1-i].charAt(0);
+                char cb = sb[sb.length-1-j].charAt(0);
+                int sum = (ca - 48) * (cb - 48);
+                answer[answer.length - i - j-1] += (sum);
+            }
+        }
+        for (int i = answer.length-1; i >0; i--) {
+            while (answer[i]>9){
+                answer[i-1]+=answer[i]/10;
+                answer[i]%=10;
+            }
+        }
+        String answer1="";
+        for (int i = answer.length-1; i >=0 ; i--) {
+            answer1=answer[i]+answer1;
+        }
+        while (answer1.charAt(0)=='0'){
+            answer1=answer1.substring(1,answer1.length());
+        }
+        return answer1;
     }
 }
