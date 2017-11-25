@@ -11,14 +11,10 @@ baa aaa
  */
 public class text {
     public static void main(String[] args) {
-        String aa="12345678";
-    
-        char a = aa.charAt(0);
-        char b = aa.charAt(0);
-        int c = a + b;
-        String x=aa.substring(0,aa.length());
+        int y=10;
+        y/=1000;
         
-        System.out.println(c);
+        System.out.println(y);
         
     }
     

@@ -506,4 +506,85 @@ public class Solution {
         }
         return answer1;
     }
+    public String intToRoman(int num) {//12. Integer to Roman
+        //Ⅰ（1）、X（10）、C（100）、M（1000）
+        //V（5）、L（50）、D（500）
+        // 0-4     I  II  III IV
+        //5-9   V VI VII VIII IX
+        String[] roman={"I","V","X","L","C","D","M"};
+        String answer="";
+        int wei=0;
+        while (num>0){
+            int l=num%10;
+            if(l<4){
+                for (int i = 0; i < l; i++) {
+                    answer=roman[wei]+answer;
+                }
+            }else if (l<5){
+                answer=roman[wei]+roman[wei+1]+answer;
+            }else if (l<9){
+                for (int i = 0; i < l-5; i++) {
+                    answer=roman[wei]+answer;
+                }
+                answer=roman[wei+1]+answer;
+            }else {
+                answer=roman[wei]+roman[wei+2]+answer;
+            }
+            wei+=2;
+            num/=10;
+        }
+        return answer;
+    }
+    public String numberToWords(int num) {//273. Integer to English Words
+        String[] a0_9={"","One ","Two ","Three ","Four ","Five ","Six ","Seven ","Eight ","Nine "};
+        String[] a10_19={"Ten ","Eleven ","Twelve ","Thirteen ","Fourteen ","Fifteen ","Sixteen ","Seventeen ","Eighteen ","Nineteen "};
+        String[] a20_90={"","","Twenty ","Thirty ","Forty ","Fifty ","Sixty ","Seventy ","Eighty ","Ninety "};
+        String[] a100={"","Thousand ","Million ","Billion ","Trillion "};
+        String[] aelse={"Zero","Hundred "};
+        String answer="";
+        if(num==0){
+            return aelse[0];
+        }
+        int l0=0;   //千位
+        while (num>0) {
+            int l3 = num % 10;//个位
+            int l2 = 0;//十位
+            int l1 = 0;//百位
+            if (num > 9) {
+                l2 = num / 10 % 10;
+                if (num > 99)
+                    l1 = num / 100 % 10;
+            }
+            if (l1 != 0 || l2 != 0 || l3 != 0) {
+                answer = a100[l0] + answer;
+                if (l2 == 1) {
+                    answer = a10_19[l3] + answer;
+                } else {
+                    answer = a20_90[l2] + a0_9[l3] + answer;
+                }
+                if (l1!=0) {
+                    answer = a0_9[l1] + aelse[1] + answer;
+                }
+            }
+            num /= 1000;
+            l0++;
+        }
+        answer = answer.substring(0, answer.length()-1);
+        return answer;
+    }
+    public int maxArea(int[] height) {//11. Container With Most Water
+        int t=0;
+        int max=0;
+        int x0=0;
+        int x1=height.length-1;
+        while (x0!=x1){
+            t=(x1-x0)*Math.min(height[x0],height[x1]);
+            max=max>t?max:t;
+            if (height[x0]>height[x1])
+                x1--;
+            else
+                x0++;
+        }
+        return max;
+    }
 }
