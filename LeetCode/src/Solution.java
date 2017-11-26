@@ -609,4 +609,23 @@ public class Solution {
         }
         return list;
     }
+    public ListNode removeNthFromEnd(ListNode head, int n) {//19. Remove Nth Node From End of List
+        List<Integer> list = new ArrayList<>();
+        while (head!=null){
+            list.add(head.val);
+            head=head.next;
+        }
+        if (list.size()<2||list.size()<n){
+            return null;
+        }
+        list.remove(list.size()-n);
+        ListNode answer=new ListNode(list.get(0));
+        ListNode pointer = answer;
+        int x=list.size();
+        for (int i = 1; i < x; i++) {
+            pointer.next = new ListNode(list.get(i));
+            pointer = pointer.next;
+        }
+        return answer;
+    }
 }
