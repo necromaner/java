@@ -6,6 +6,7 @@
  * Time: 下午5:57
  */
 import java.util.Arrays;
+import java.util.*;
 
 
 public class Solution {
@@ -586,5 +587,26 @@ public class Solution {
                 x0++;
         }
         return max;
+    }
+    
+    public List<String> letterCombinations(String digits) {//17. Letter Combinations of a Phone Number
+        String[] table = new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        List<String> list = new ArrayList<String>();
+        if(digits.equals(""))
+            return list;
+        list.add("");
+        while (digits.length()>0){
+            List<String> list1 = new ArrayList<String>();
+            int x=digits.charAt(0)-48;
+            for (int j = 0; j < list.size(); j++) {
+                for (int i = 0; i < table[x].length(); i++) {
+                    String y = list.get(j) + String.valueOf(table[x].charAt(i));
+                    list1.add(y);
+                }
+            }
+            list=list1;
+            digits = digits.substring(1, digits.length());
+        }
+        return list;
     }
 }
