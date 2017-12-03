@@ -17,7 +17,7 @@ For example,
 public class Leetcode_19_273_IntegertoEnglishWords {//完成
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int num=12345;
+        int num=10000;
         String english=solution.numberToWords(num);
         System.out.println("num  is  = "+num);
         System.out.println("English  = "+english);

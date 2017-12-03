@@ -27,7 +27,7 @@ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 public class Leetcode_21_17_LetterCombinationsofaPhoneNumber {//完成
     public static void main(String[] args) {
         Solution solution = new Solution();
-        String digits="";
+        String digits="234";
         List<String> letterCombinations=solution.letterCombinations(digits);
         System.out.println(  "digits  is  = "+digits);
         System.out.print("letterCombinations  = ");

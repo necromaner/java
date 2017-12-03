@@ -486,68 +486,70 @@ public class Solution {
         int[] answer = new int[sa.length + sb.length];
         for (int i = 0; i < sa.length; i++) {
             for (int j = 0; j < sb.length; j++) {
-                char ca = sa[sa.length-1-i].charAt(0);
-                char cb = sb[sb.length-1-j].charAt(0);
+                char ca = sa[sa.length - 1 - i].charAt(0);
+                char cb = sb[sb.length - 1 - j].charAt(0);
                 int sum = (ca - 48) * (cb - 48);
-                answer[answer.length - i - j-1] += (sum);
+                answer[answer.length - i - j - 1] += (sum);
             }
         }
-        for (int i = answer.length-1; i >0; i--) {
-            while (answer[i]>9){
-                answer[i-1]+=answer[i]/10;
-                answer[i]%=10;
+        for (int i = answer.length - 1; i > 0; i--) {
+            while (answer[i] > 9) {
+                answer[i - 1] += answer[i] / 10;
+                answer[i] %= 10;
             }
         }
-        String answer1="";
-        for (int i = answer.length-1; i >=0 ; i--) {
-            answer1=answer[i]+answer1;
+        String answer1 = "";
+        for (int i = answer.length - 1; i >= 0; i--) {
+            answer1 = answer[i] + answer1;
         }
-        while (answer1.charAt(0)=='0'){
-            answer1=answer1.substring(1,answer1.length());
+        while (answer1.charAt(0) == '0') {
+            answer1 = answer1.substring(1, answer1.length());
         }
         return answer1;
     }
+    
     public String intToRoman(int num) {//12. Integer to Roman
         //Ⅰ（1）、X（10）、C（100）、M（1000）
         //V（5）、L（50）、D（500）
         // 0-4     I  II  III IV
         //5-9   V VI VII VIII IX
-        String[] roman={"I","V","X","L","C","D","M"};
-        String answer="";
-        int wei=0;
-        while (num>0){
-            int l=num%10;
-            if(l<4){
+        String[] roman = {"I", "V", "X", "L", "C", "D", "M"};
+        String answer = "";
+        int wei = 0;
+        while (num > 0) {
+            int l = num % 10;
+            if (l < 4) {
                 for (int i = 0; i < l; i++) {
-                    answer=roman[wei]+answer;
+                    answer = roman[wei] + answer;
                 }
-            }else if (l<5){
-                answer=roman[wei]+roman[wei+1]+answer;
-            }else if (l<9){
-                for (int i = 0; i < l-5; i++) {
-                    answer=roman[wei]+answer;
+            } else if (l < 5) {
+                answer = roman[wei] + roman[wei + 1] + answer;
+            } else if (l < 9) {
+                for (int i = 0; i < l - 5; i++) {
+                    answer = roman[wei] + answer;
                 }
-                answer=roman[wei+1]+answer;
-            }else {
-                answer=roman[wei]+roman[wei+2]+answer;
+                answer = roman[wei + 1] + answer;
+            } else {
+                answer = roman[wei] + roman[wei + 2] + answer;
             }
-            wei+=2;
-            num/=10;
+            wei += 2;
+            num /= 10;
         }
         return answer;
     }
+    
     public String numberToWords(int num) {//273. Integer to English Words
-        String[] a0_9={"","One ","Two ","Three ","Four ","Five ","Six ","Seven ","Eight ","Nine "};
-        String[] a10_19={"Ten ","Eleven ","Twelve ","Thirteen ","Fourteen ","Fifteen ","Sixteen ","Seventeen ","Eighteen ","Nineteen "};
-        String[] a20_90={"","","Twenty ","Thirty ","Forty ","Fifty ","Sixty ","Seventy ","Eighty ","Ninety "};
-        String[] a100={"","Thousand ","Million ","Billion ","Trillion "};
-        String[] aelse={"Zero","Hundred "};
-        String answer="";
-        if(num==0){
+        String[] a0_9 = {"", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine "};
+        String[] a10_19 = {"Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen "};
+        String[] a20_90 = {"", "", "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety "};
+        String[] a100 = {"", "Thousand ", "Million ", "Billion ", "Trillion "};
+        String[] aelse = {"Zero", "Hundred "};
+        String answer = "";
+        if (num == 0) {
             return aelse[0];
         }
-        int l0=0;   //千位
-        while (num>0) {
+        int l0 = 0;   //千位
+        while (num > 0) {
             int l3 = num % 10;//个位
             int l2 = 0;//十位
             int l1 = 0;//百位
@@ -563,25 +565,26 @@ public class Solution {
                 } else {
                     answer = a20_90[l2] + a0_9[l3] + answer;
                 }
-                if (l1!=0) {
+                if (l1 != 0) {
                     answer = a0_9[l1] + aelse[1] + answer;
                 }
             }
             num /= 1000;
             l0++;
         }
-        answer = answer.substring(0, answer.length()-1);
+        answer = answer.substring(0, answer.length() - 1);
         return answer;
     }
+    
     public int maxArea(int[] height) {//11. Container With Most Water
-        int t=0;
-        int max=0;
-        int x0=0;
-        int x1=height.length-1;
-        while (x0!=x1){
-            t=(x1-x0)*Math.min(height[x0],height[x1]);
-            max=max>t?max:t;
-            if (height[x0]>height[x1])
+        int t = 0;
+        int max = 0;
+        int x0 = 0;
+        int x1 = height.length - 1;
+        while (x0 != x1) {
+            t = (x1 - x0) * Math.min(height[x0], height[x1]);
+            max = max > t ? max : t;
+            if (height[x0] > height[x1])
                 x1--;
             else
                 x0++;
@@ -590,42 +593,201 @@ public class Solution {
     }
     
     public List<String> letterCombinations(String digits) {//17. Letter Combinations of a Phone Number
-        String[] table = new String[]{"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        String[] table = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         List<String> list = new ArrayList<String>();
-        if(digits.equals(""))
+        if (digits.equals(""))
             return list;
         list.add("");
-        while (digits.length()>0){
+        while (digits.length() > 0) {
             List<String> list1 = new ArrayList<String>();
-            int x=digits.charAt(0)-48;
+            int x = digits.charAt(0) - 48;
             for (int j = 0; j < list.size(); j++) {
                 for (int i = 0; i < table[x].length(); i++) {
                     String y = list.get(j) + String.valueOf(table[x].charAt(i));
                     list1.add(y);
                 }
             }
-            list=list1;
+            list = list1;
             digits = digits.substring(1, digits.length());
         }
         return list;
     }
+    
     public ListNode removeNthFromEnd(ListNode head, int n) {//19. Remove Nth Node From End of List
         List<Integer> list = new ArrayList<>();
-        while (head!=null){
+        while (head != null) {
             list.add(head.val);
-            head=head.next;
+            head = head.next;
         }
-        if (list.size()<2||list.size()<n){
+        if (list.size() < 2 || list.size() < n) {
             return null;
         }
-        list.remove(list.size()-n);
-        ListNode answer=new ListNode(list.get(0));
+        list.remove(list.size() - n);
+        
+        ListNode answer = new ListNode(list.get(0));
         ListNode pointer = answer;
-        int x=list.size();
+        int x = list.size();
         for (int i = 1; i < x; i++) {
             pointer.next = new ListNode(list.get(i));
             pointer = pointer.next;
         }
         return answer;
     }
+    
+    public ListNode swapPairs(ListNode head) {//24. Swap Nodes in Pairs
+        ListNode list = null;
+        
+        if (head == null)
+            return null;
+        if (head != null && head.next == null) {
+            list = new ListNode(head.val);
+        } else if (head.next != null) {
+            list = new ListNode(head.next.val);
+            list.next = new ListNode(head.val);
+            ListNode pointer = list.next;
+            if (head.next.next != null) {
+                head = head.next.next;
+                while (head.next != null) {
+                    pointer.next = new ListNode(head.next.val);
+                    pointer.next.next = new ListNode(head.val);
+                    pointer = pointer.next.next;
+                    if (head.next.next == null) {
+                        break;
+                    }
+                    head = head.next.next;
+    
+                }
+                if (head != null && head.next == null) {
+                    pointer.next = new ListNode(head.val);
+//                    pointer = pointer.next;
+                }
+            }
+        }
+        return list;
+    }
+    
+    public int strStr(String haystack, String needle) {//28. Implement strStr()
+        if (haystack.length() < needle.length())
+            return -1;
+        if (haystack.length() == 0 || needle.length() == 0) {
+            return 0;
+        }
+        int answer = -1;
+        int length = 0;
+        l1:
+        for (int i = 0; i < haystack.length(); i++) {
+            if (haystack.charAt(i) == needle.charAt(0) && (haystack.length() - i) >= needle.length()) {
+                answer = i;
+                l2:
+                for (int j = 0; j < needle.length(); j++) {
+                    length++;
+                    if (haystack.charAt(i + j) != needle.charAt(j)) {
+                        answer = -1;
+                        length = 0;
+                        break l2;
+                    }
+                }
+                if (length == needle.length()) {
+                    break l1;
+                }
+            }
+        }
+        return answer;
+    }
+    
+    int divide(int dividend, int divisor) {//29. Divide Two Integers
+//        return divide1(dividend,divisor);//抄
+        return divide2(dividend, divisor);//抄
+    }
+    
+    int divide1(int dividend, int divisor) {
+        int flag = 0;
+        if (dividend < 0 && divisor < 0) flag = 1;
+        else if (dividend > 0 && divisor > 0) flag = 1;
+        long a = Math.abs((long) dividend);
+        long b = Math.abs((long) divisor);
+        long answer = 0;
+        while (a >= b) {
+            long c = b;
+            for (int i = 0; a >= c; i++, c <<= 1) {
+//                System.out.println("1-1 a="+dividend+" ,b="+divisor+" ,c=\"+c+\", i="+i+" ,answer="+answer);
+                a -= c;
+                answer += 1 << i;
+//                System.out.println("1-2 a="+dividend+" ,b="+divisor+" ,c=\"+c+\", i="+i+" ,answer="+answer);
+            }
+        }
+        answer = flag == 1 ? answer : -answer;
+        if (answer > Integer.MAX_VALUE || answer < Integer.MIN_VALUE) return Integer.MAX_VALUE;
+        return (int) answer;
+    }
+    
+    int divide2(int dividend, int divisor) {
+        int flag = 0;
+        if ((dividend < 0 && divisor < 0) || (dividend > 0 && divisor > 0)) flag = 1;
+        long a = Math.abs((long) dividend), b = Math.abs((long) divisor), answer = 0;
+        long[] map = new long[33], times = new long[33];
+        map[0] = b;
+        times[0] = 1;
+        int j = 0;
+        for (int i = 1; a > map[i - 1]; i++) {
+            map[i] = map[i - 1] + map[i - 1];
+            times[i] = times[i - 1] + times[i - 1];
+            j = i;
+        }
+        for (int i = j; i >= 0; i--) {
+            while (a >= map[i]) {
+                a -= map[i];
+                answer += times[i];
+            }
+        }
+        answer = flag == 1 ? answer : -answer;
+        if (answer > Integer.MAX_VALUE || answer < Integer.MIN_VALUE) return Integer.MAX_VALUE;
+        return (int) answer;
+    }
+    
+    public void nextPermutation(int[] nums) {//31. Next Permutation
+        /**
+         * 从末位开始找与最近的比它小的数交换，并排序交换数后面的数
+         * 1.找到最近的比它小的数,如果没找到比它小的，找上一位的最近的比它小的数（在这些中找到比它小最靠右的，比它小一样时，找交换位靠右的)
+         * 2.交换两个数的位置
+         * 3.排序交换位置后面的数
+         */
+        //1
+        int now = 0;//交换的位置
+        int min = 0;//比它小的位置
+        int c = Integer.MAX_VALUE;//差值;
+        for (int i = nums.length - 1; i > 0; i--) {
+            for (int j = i - 1; j >= 0; j--) {
+//                System.out.println("----------1----------");
+//                System.out.println("i = " + i + " " + nums[i]);
+//                System.out.println("j = " + j + " " + nums[j]);
+                if (nums[i] > nums[j]) {
+//                    System.out.println("----------2----------");
+//                    System.out.println("i = " + i + " " + nums[i]);
+//                    System.out.println("j = " + j + " " + nums[j]);
+                    int now1 = i;
+                    int min1 = j;
+//                    System.out.println("min = " + min + " min1 = " + min1);
+//                    System.out.println("now = " + now + " now1 = " + now1);
+                    if ((min1 > min) || (min1 == min && now1 > now)) {
+//                        System.out.println("----------3----------");
+//                        System.out.println("i = " + i + " " + nums[i]);
+//                        System.out.println("j = " + j + " " + nums[j]);
+                        now = now1;
+                        min = min1;
+                    }
+                }
+            }
+        }
+        //2
+        int temporary = nums[now];
+        nums[now] = nums[min];
+        nums[min] = temporary;
+        //3
+        Arrays.sort(nums, min + 1, nums.length);
+        if (min == 0 && now == 0)
+            Arrays.sort(nums);
+        return;
+    }
 }
+

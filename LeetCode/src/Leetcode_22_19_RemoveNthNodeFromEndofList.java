@@ -8,7 +8,7 @@
 public class Leetcode_22_19_RemoveNthNodeFromEndofList {//完成
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int n=1;
+        int n=3;
         ListNode head=new ListNode(1);
         ListNode node1=new ListNode(2);
         ListNode node2=new ListNode(3);
@@ -39,4 +39,5 @@ public class Leetcode_22_19_RemoveNthNodeFromEndofList {//完成
         }
         System.out.println("");
     }
+
 }
