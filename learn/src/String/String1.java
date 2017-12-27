@@ -25,3 +25,35 @@ public class String1 {
          return str.toUpperCase();
     }
 }
+class Person{
+    private String name;
+    private int age;
+    public Person(){
+        System.out.println("***********");
+        getInfo();
+    }
+    public Person(String name){
+        this();
+        this.name=name;
+    }
+    public Person(String name,int age){
+        this(name);
+        this.age=age;
+    }
+    
+    /**
+     * @return
+     */
+    public String getInfo() {
+        return "姓名："+this.name+" 年龄："+this.age;
+    }
+    
+    public static void main(String[] args) {
+        Person p1=new Person();
+        Person p2=new Person("name");
+        Person p3=new Person("name1",19);
+        p1.getInfo();
+        p2.getInfo();
+        p3.getInfo();
+    }
+}
