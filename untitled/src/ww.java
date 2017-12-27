@@ -9,26 +9,26 @@ import java.util.Scanner;
  */
 public class ww {
     public static void main(String[] args) {
-//        qwe qwe=new qqq();
-//        //qwe.huang();
-//        Scanner sc = new Scanner(System.in);
-//        int cnt=0;
-//        for (int i = 1; i >0 ; i++) {
-//            System.out.println("......");
-//            String a = sc.next();
-//            if("cat".equals(a)){
-//                cnt =qwe.huang();
-//            }else if("dog".equals(a)){
-//
-//            }else if("end".equals(a)){
-//                System.out.println(cnt);
-//                return ;
-//            }
-//        }
-//        int[] a=new int[9];
-//        System.out.println(a.length);
-        qwe qwe=new qwe();
-        System.out.println(qwe.aaa(3));
-//        qwe.a(4);
+//        System.out.println(sum(100));
+        qwe q1=new qwe();
+        q1.name="aaa";
+        q1.x=10;
+        q1.y();
+        qwe q2=q1;
+        q2.name="bbb";
+        q2.y();
+        q1.y();
+        qwe q3=new qwe();
+        q3=q1;
+        q3.name="ccc";
+        q1.y();
+        
+    }
+    public static int sum(int num){
+        if (num==1){
+            return num;
+        }
+        return num+sum(num-1);
+        
     }
 }
