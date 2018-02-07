@@ -10,6 +10,7 @@ public class Server {
     private Socket socket;
     private PrintWriter pw=null;
     private BufferedReader br=null;
+    private boolean close=false;
     static Scanner scanner=new Scanner(System.in);
     public static void main(String[] args)  {
         new Server();
@@ -27,38 +28,43 @@ public class Server {
             e.printStackTrace();
         }
         Start();
-        input();
-        Close();
+        while (true){
+            InPut();
+            OutPut();
+            if (close)
+                break;
+        }
     }
     public void Start() {
         try {
-            while (true) {
                 socket = serverSocket.accept();
                 pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 System.out.println(socket);
-            }
         } catch (IOException e) {
             System.out.println("客户端连接失败");
             e.printStackTrace();
         }
     
     }
-    public void input(){
+    public void InPut(){
+        try {
+            br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String string=br.readLine();
+            System.out.println("Server读到："+string);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void OutPut(){
         try {
             pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-    
-            while(true){
-                String string=br.readLine();
-                System.out.println("Server读到："+string);
-                System.out.print("Server端请输入：");
-                String str=scanner.next();
-                pw.println(str);
-                pw.flush();
-                if(str.equals("exit")){
-                    break;
-                }
+            System.out.print("Server端请输入：");
+            String str = scanner.next();
+            pw.println(str);
+            pw.flush();
+            if(str.equals("exit")){
+                Close();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,6 +79,7 @@ public class Server {
             e.printStackTrace();
             System.out.println("关闭失败");
         }
+        close=true;
     }
 }
 
