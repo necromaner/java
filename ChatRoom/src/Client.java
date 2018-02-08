@@ -24,11 +24,14 @@ public class Client {
     public Client() {
         Start();
         while (true) {
+//            new test1(socket).start();
 //            new OutPut().start();
+            OutPut();
             if (close) {
                 break;
             }
-            new InPut().start();
+            InPut();
+//            new InPut().start();
             if (close)
                 break;
         }
@@ -50,70 +53,94 @@ public class Client {
         }
     }
     
-    //    public void InPut() {
-//        try {
-//            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            String string = br.readLine();
-//            System.out.println("Client读到：" + string);
-//            if (string.equals("exit")) {
-//                Close();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//    public void OutPut(){
-//        try {
-//            pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-//                System.out.print("Client端请输入：");
-//                String str = scanner.next();
-//                pw.println(str);
-//                pw.flush();
-//                if(str.equals("exit")){
-//                    Close();
-//                }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    public class InPut extends Thread {
-        public InPut() {
-        
-        }
-    
-        public void run() {
-            try {
-                br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String string = br.readLine();
-                System.out.println("Client读到：" + string);
-                if (string.equals("exit")) {
-                    Close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        public void InPut() {
+        try {
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String string = br.readLine();
+            System.out.println("Client读到：" + string);
+            if (string.equals("exit")) {
+                Close();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    public class OutPut extends Thread {
-        public OutPut() {
-    
-        }
-    
-        public void run() {
-            try {
-                pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+    public void OutPut(){
+        try {
+            pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 System.out.print("Client端请输入：");
                 String str = scanner.next();
                 pw.println(str);
                 pw.flush();
-                if (str.equals("exit")) {
+                if(str.equals("exit")){
                     Close();
                 }
-            } catch (IOException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public class test1 extends Thread{
+        Socket socket1;
+        public test1(Socket socket){
+            this.socket1=socket;
+        }
+        public void run() {
+            try {
+                while(true){
+    
+                    br = new BufferedReader(new InputStreamReader(socket1.getInputStream()));
+                    pw=new PrintWriter(new OutputStreamWriter(socket1.getOutputStream()));
+                    System.out.println("Client端请输入：");
+                    String str = scanner.next();
+                    pw.println(str);
+                    pw.flush();
+//                    String string=br.readLine();
+//                    System.out.println("Client读到："+string);
+                }
+            }catch (Exception e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
+//    public class InPut extends Thread {
+//        public InPut() {
+//
+//        }
+//
+//        public void run() {
+//            try {
+//                br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//                String string = br.readLine();
+//                System.out.println("Client读到：" + string);
+//                if (string.equals("exit")) {
+//                    Close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//    public class OutPut extends Thread {
+//        public OutPut() {
+//
+//        }
+//
+//        public void run() {
+//            try {
+//                pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+//                System.out.print("Client端请输入：");
+//                String str = scanner.next();
+//                pw.println(str);
+//                pw.flush();
+//                if (str.equals("exit")) {
+//                    Close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
     
     public void Close() {
         try {
@@ -126,4 +153,3 @@ public class Client {
         }
     }
 }
-
