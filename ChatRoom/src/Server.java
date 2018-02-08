@@ -74,12 +74,14 @@ public class Server {
             try {
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String string = reader.readLine();
-                System.out.println(socket.getRemoteSocketAddress() + " 发来 ：" + string);
+                System.out.println("从 "+socket.getRemoteSocketAddress() + " 发来消息 ：" + string);
                 OutPut(string);
                 for (int i = 0; i < clients.size(); i++) {
+                    System.out.println("给 "+clients.get(i).socket.getRemoteSocketAddress()+" 发送消息： "+string);
                     ServerThread thread=clients.get(i);
                     thread.OutPut(string);
                 }
+                System.out.println("—————————————————————————————————————————");
             } catch (IOException e) {
                 e.printStackTrace();
             }
