@@ -50,8 +50,8 @@ public class Client {
             System.out.println(socket);
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-            new test1(socket).start();
             new test2(socket).start();
+            new test1(socket).start();
         } catch (Exception e) {
             System.out.println("连接失败");
         }
@@ -86,8 +86,7 @@ public class Client {
                     String str = scanner.next();
                     pw.println(str);
                     pw.flush();
-//                    String string=br.readLine();
-//                    System.out.println("Client读到："+string);
+                    System.out.println("test--1");
                 }
             }catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -103,13 +102,13 @@ public class Client {
         public void run() {
             try {
                 while(true){
-                
 //                    System.out.println("Client端请输入：");
 //                    String str = scanner.next();
 //                    pw.println(str);
 //                    pw.flush();
                     String string=br.readLine();
                     System.out.println("Client读到："+string);
+                    System.out.println("test--2");
 //                    System.out.println(string);
                 }
             }catch (Exception e) {
