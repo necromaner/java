@@ -12,33 +12,14 @@ import static java.net.InetAddress.getLocalHost;
 
 public class Client {
     private Socket socket;
-    private PrintWriter pw = null;
-    private BufferedReader br = null;
-    private boolean close = false;
+    private PrintWriter writer = null;
+    private BufferedReader reader = null;
     static Scanner scanner = new Scanner(System.in);
-    private String name="";
+    private String name = "";
     
     public static void main(String[] args) {
         new Client();
     }
-    
-//    public Client() {
-//        Start();
-//        while (true) {
-////            new test1(socket).start();
-////            new OutPut().start();
-//            OutPut();
-//            if (close) {
-//                break;
-//            }
-//            InPut();
-////            new InPut().start();
-//            if (close)
-//                break;
-//        }
-////        Close();
-//    }
-
     public Client() {
         try {
             Scanner input = new Scanner(System.in);
@@ -50,12 +31,12 @@ public class Client {
             System.out.println("连接成功");
             System.out.println(socket);
             System.out.print("请输入昵称： ");
-            name=input.nextLine();
-            if ("".equals(name)){
-                name=InetAddress.getLocalHost().getAddress().toString();
+            name = input.nextLine();
+            if ("".equals(name)) {
+                name = InetAddress.getLocalHost().getAddress().toString();
             }
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             new OutPut(socket).start();
             new InPut(socket).start();
         } catch (Exception e) {
@@ -63,86 +44,96 @@ public class Client {
             System.out.println("连接失败");
         }
     }
-    public class InPut extends Thread{
+
+    public class InPut extends Thread {
         Socket socket1;
-        public InPut(Socket socket){
-            this.socket1=socket;
+        
+        public InPut(Socket socket) {
+            this.socket1 = socket;
         }
+        
         public void run() {
             try {
-                while(true){
-                    
-//                    System.out.println("Client端请输入：");
-                    String str = scanner.next();
-                    if ("======ERROR======".equals(Agreement(str))){
-                        break;
-                    }
-                    pw.println(Agreement(str));
-                    pw.flush();
-                    System.out.println("test--1");
+                while (true) {
+                    String str = scanner.nextLine();
+                    System.out.println("发送 ："+str);
+                    writer.println(Agreement(str));
+                    writer.flush();
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("+++++++++++2++++++++++++");
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+        
         /**
-        协议:
-         ==exit==     关闭客户端
+         * 协议:
+         * ==exit==     关闭客户端
          */
-        public String Agreement(String s){
+        public String Agreement(String s) {
             if ("==exit==".equals(s)) {
                 Close();
                 return "======ERROR======";
-            }else {
-            String[] s1 = s.split("=-=",2);
-            System.out.println("----1----"+s1.length);
-            if (s1.length==2) {
-                String[] s2 = s1[0].split("\\.");
-                System.out.println("----2----"+s2.length);
-                System.out.println();
-                if (s2.length == 4) {
-                    String[] s3 = s2[3].split(":");
-                    System.out.println("----3----"+s3.length);
-                    if (s3.length == 2)
-                        return name + "|-=-=-=-|/" + s1[0] + "|-=-=-=-|" + s1[1];
+            } else {
+                String[] s1 = s.split("=-=", 2);
+                if (s1.length == 2) {
+                    String[] s2 = s1[0].split("\\.");
+                    System.out.println("----2----" + s2.length);
+                    System.out.println();
+                    if (s2.length == 4) {
+                        String[] s3 = s2[3].split(":");
+                        System.out.println("----3----" + s3.length);
+                        if (s3.length == 2)
+                            return name + "|-=-=-=-|/" + s1[0] + "|-=-=-=-|" + s1[1];
+                    }
                 }
+                return name + "|-=-=-=-|" + "ALL" + "|-=-=-=-|" + s;
             }
-            
-            
-            return name+"|-=-=-=-|"+"ALL"+"|-=-=-=-|"+s;
-            }
+        }
+        public void ChangeName(String name){
+        
         }
     }
-    public class OutPut extends Thread{
+    
+    public class OutPut extends Thread {
         Socket socket1;
-        public OutPut(Socket socket){
-            this.socket1=socket;
+        
+        public OutPut(Socket socket) {
+            this.socket1 = socket;
         }
+        
         public void run() {
             try {
-                while(true){
-                    String string=br.readLine();
-                    System.out.println("Client读到："+string);
+                while (true) {
+                    String string = reader.readLine();
+                    System.out.println("Client读到：" + string);
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("+++++++++++3++++++++++++");
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
+    
     public void Close() {
         try {
-            close = true;
+            InPut.sleep(100);
+            OutPut.sleep(100);
+            writer.close();
+            reader.close();
             socket.close();
+            
             System.exit(0);
             System.out.println("关闭成功");
         } catch (IOException e) {
             System.out.println("+++++++++++4++++++++++++");
             System.out.println("关闭失败");
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.exit(0);
         }
     }
 }

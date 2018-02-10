@@ -16,8 +16,8 @@ public class Server {
     
     public Server() {
         try {
-            String addr = InetAddress.getLocalHost().getHostAddress();//获得本机IP
-            System.out.println("服务器IP：" + addr);
+            String address = InetAddress.getLocalHost().getHostAddress();
+            System.out.println("服务器IP：" + address);
             ServerSocket serverSocket = new ServerSocket(5000);
             System.out.println("启动成功");
             while (true) {
@@ -50,19 +50,12 @@ public class Server {
             try {
                 writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//            System.out.println(socket);
-//            System.out.println(socket.getRemoteSocketAddress());
-//                System.out.println("addr：" + socket.getInetAddress() + " ；port: " + socket.getPort() + " 已连接");
                 System.out.println(socket.getRemoteSocketAddress() + " 已连接");
             } catch (IOException e) {
                 System.out.println("+++++++++++3++++++++++++");
                 System.out.println("客户端连接失败");
                 e.printStackTrace();
             }
-        }
-    
-        public PrintWriter getWriter() {
-            return writer;
         }
     
         public void run() {
@@ -77,13 +70,8 @@ public class Server {
             try {
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String string = reader.readLine();
-                System.out.println("-|从 " + socket.getRemoteSocketAddress() + " 发来消息 ：" + string);
-//                OutPut(string);
                 String[] ss1 = string.split("\\|-=-=-=-\\|");
-                System.out.println("昵称： " + ss1[0]);
-                System.out.println("发送给： " + ss1[1]);
-                System.out.println("发送消息： " + ss1[2]);
-    
+                System.out.println("-|从 " + ss1[0] + " (" + socket.getRemoteSocketAddress() + ") 发来消息 ：" + ss1[2]);
                 if ("ALL".equals(ss1[1])) {
                     SendALL(ss1);
                 } else
@@ -99,12 +87,23 @@ public class Server {
         }
     
         public void SendALL(String[] string) {
-            System.out.println("--------群发--------发送人数： "+(clients.size()-1));
+            System.out.println("--------群发--------发送人数： " + (clients.size() - 1));
             for (int i = 0; i < clients.size(); i++) {
                 if (socket != clients.get(i).socket) {
                     System.out.println("    -|给 " + clients.get(i).socket.getRemoteSocketAddress() + " 发送消息： " + string[0] + "||=-=-=-=||" + string[2]);
                     ServerThread thread = clients.get(i);
                     thread.OutPut(string[0] + "(" + clients.get(i).socket.getRemoteSocketAddress() + ") :" + string[2]);
+                }
+            }
+        }
+        public void SendAllOrder(String string){
+            String[] order = string.split("==------>==<-------==");
+            if (order.length==2){
+                if ("EXIT".equals(order[0])){
+                    for (int i = 0; i < clients.size(); i++) {
+                        ServerThread thread = clients.get(i);
+                        thread.OutPut(order[1] + "已退出，剩余人数： "+clients.size());
+                    }
                 }
             }
         }
@@ -171,6 +170,7 @@ public class Server {
                 }
                 System.out.println("addr：" + socket.getInetAddress() + " ；port: " + socket.getPort() + " 已退出");
                 System.out.println("连接人数： " + clients.size());
+                SendAllOrder("EXIT==------>==<-------=="+socket.getRemoteSocketAddress());
             } catch (IOException e) {
                 System.out.println("+++++++++++7++++++++++++");
                 e.printStackTrace();
@@ -180,3 +180,4 @@ public class Server {
         }
     }
 }
+
