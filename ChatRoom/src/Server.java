@@ -7,6 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * 消息转换：
+ * 用户名=-=消息    ->   用户名=-=ALL=-=消息
+ * 用户名=-=命令    ->   用户名=-=ALL=-=命令
+ * 消息            ->   用户名=-=ALL=-=消息
+ * 通讯协议：
+ * 用户名=-=ALL=-=消息               发送给除自己以外所有人消息
+ * 用户名=-=ALL=-=命令
+ * 用户名=-=Address=-=消息           发送给指定Address客户端
+ * 用户名=-=Addiess-Address=-=消息   发送给多个指定Address客户端
+ */
 public class Server {
     List<ServerThread> clients = new ArrayList<ServerThread>();
     
@@ -110,7 +121,7 @@ public class Server {
             }
             SendBack(s);
         }
-        public void SendBack(String[] s){
+        public void SendBack(String[] s){//发送给发送的客户端
             for (int i = 0; i < clients.size(); i++) {//发回给发送消息的客户端
                 if (socket == clients.get(i).socket) {
                     ServerThread thread = clients.get(i);
@@ -134,7 +145,7 @@ public class Server {
                 }
             }
         }
-        public void SendALL(String[] string) {
+        public void SendALL(String[] string) {//发送给除去发送消息的客户端
             System.out.println("--------群发--------发送人数： " + (clients.size() - 1));
             for (int i = 0; i < clients.size(); i++) {
                 if (socket != clients.get(i).socket) {
@@ -144,7 +155,7 @@ public class Server {
                 }
             }
         }
-        public void SendAllOrder(String string){
+        public void SendAllOrder(String string){//发送给所有客户端
             String[] order = string.split("==------>==<-------==");
             if (order.length==2){
                 if ("EXIT".equals(order[0])){
@@ -156,7 +167,7 @@ public class Server {
             }
         }
     
-        public void SendAppoint(String[] string) {
+        public void SendAppoint(String[] string) {//发送给指定Address客户端
             boolean b=true;
             System.out.println("--------指定发--------");
             String[] s1 = string[1].split("-");
@@ -216,7 +227,7 @@ public class Server {
                         break;
                     }
                 }
-                System.out.println("addr：" + socket.getInetAddress() + " ；port: " + socket.getPort() + " 已退出");
+                System.out.println("Address：" + socket.getRemoteSocketAddress() + " 已退出");
                 System.out.println("连接人数： " + clients.size());
                 SendAllOrder("EXIT==------>==<-------=="+socket.getRemoteSocketAddress());
             } catch (IOException e) {
