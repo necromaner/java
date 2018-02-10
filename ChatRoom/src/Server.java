@@ -70,12 +70,10 @@ public class Server {
             try {
                 reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String string = reader.readLine();
-                String[] ss1 = string.split("\\|-=-=-=-\\|");
+                String[] ss1 = string.split("=-=",3);
+                ss1=Regulation(ss1);
                 System.out.println("-|从 " + ss1[0] + " (" + socket.getRemoteSocketAddress() + ") 发来消息 ：" + ss1[2]);
-                if ("ALL".equals(ss1[1])) {
-                    SendALL(ss1);
-                } else
-                    SendAppoint(ss1);
+                Agreement(ss1);
                 System.out.println("—————————————————————————————————————————");
             } catch (IOException e) {
                 System.out.println("+++++++++++4++++++++++++");
@@ -85,12 +83,62 @@ public class Server {
                 Close();
             }
         }
-    
+        public String[] Regulation(String[] s) {
+            String[] ss = new String[3];
+            if (s.length==1){
+                ss[0] = "其他客户端";
+                ss[1] = "ALL";
+                ss[2] = s[0];
+            }else if (s.length == 2) {
+                ss[0] = s[0];
+                ss[1] = "ALL";
+                ss[2] = s[1];
+            } else if (s.length == 3) {
+                ss[0] = s[0];
+                ss[1] = s[1];
+                ss[2] = s[2];
+            }
+            return ss;
+        }
+        public void Agreement(String[] s) {
+            if ("ALL".equals(s[1])){
+                if (!("==name==".equals(s[2])||"==user==".equals(s[2]))){
+                    SendALL(s);
+                }
+            }else {
+                SendAppoint(s);
+            }
+            SendBack(s);
+        }
+        public void SendBack(String[] s){
+            for (int i = 0; i < clients.size(); i++) {//发回给发送消息的客户端
+                if (socket == clients.get(i).socket) {
+                    ServerThread thread = clients.get(i);
+                    if ("==name==".equals(s[2])) {
+                        thread.OutPut("改名成功");
+                    } else if ("==user==".equals(s[2])){
+                        thread.OutPut("目前在线人数除去自己："+(clients.size()-1)+"人");
+                        
+                        for (int j = 0; j < clients.size(); j++) {//查找除发送消息的客户端其他客户端
+                            int otherUser=0;
+                            System.out.println(otherUser+"--------");
+                            System.out.println(socket+"---"+clients.get(j).socket);
+                            if (socket != clients.get(j).socket) {
+                                System.out.println(j+"---");
+                                otherUser++;
+                                thread.OutPut(otherUser+". "+clients.get(j).socket.getRemoteSocketAddress());
+                            }
+                        }
+                    }else
+                        thread.OutPut("发送： " + s[2]);
+                }
+            }
+        }
         public void SendALL(String[] string) {
             System.out.println("--------群发--------发送人数： " + (clients.size() - 1));
             for (int i = 0; i < clients.size(); i++) {
                 if (socket != clients.get(i).socket) {
-                    System.out.println("    -|给 " + clients.get(i).socket.getRemoteSocketAddress() + " 发送消息： " + string[0] + "||=-=-=-=||" + string[2]);
+                    System.out.println("    -|给 " + clients.get(i).socket.getRemoteSocketAddress() + " 发送消息： " + string[2]);
                     ServerThread thread = clients.get(i);
                     thread.OutPut(string[0] + "(" + clients.get(i).socket.getRemoteSocketAddress() + ") :" + string[2]);
                 }
@@ -109,35 +157,35 @@ public class Server {
         }
     
         public void SendAppoint(String[] string) {
-            boolean b = true;
+            boolean b=true;
             System.out.println("--------指定发--------");
-            String[] s1 = string[1].split("<-=-=-=->");
+            String[] s1 = string[1].split("-");
             System.out.println("发送给" + s1.length + "个人");
             System.out.println("Address :");
-            for (int i = 0; i < s1.length; i++) {
-                System.out.println(i + ". " + s1[i]);
-            }
-            for (int i = 0; i < clients.size(); i++) {
-                System.out.println("-|" + i + ". " + clients.get(i).socket.getRemoteSocketAddress().toString());
-                for (int j = 0; j < s1.length; j++) {
-                    System.out.println("    -|" + j + ". " + s1[j]);
-                    if (s1[j].equals(clients.get(i).socket.getRemoteSocketAddress().toString())) {
+            for (int j = 0; j < s1.length; j++) {
+                s1[j]="/"+s1[j];
+                b=true;
+                System.out.println("-|" + j + ". " + s1[j]);
+                for (int i = 0; i < clients.size(); i++) {
+                    System.out.println("    -|" + i + ". " + clients.get(i).socket.getRemoteSocketAddress().toString());
+                    if ((s1[j]).equals(clients.get(i).socket.getRemoteSocketAddress().toString())) {
                         b = false;
-                        System.out.println("    -|给 " + clients.get(i).socket.getRemoteSocketAddress() + " 发送消息： " + string[0] + "||=-=-=-=||" + string[2]);
+                        System.out.println("        -|给 " + clients.get(i).socket.getRemoteSocketAddress() + " 发送消息： "+ string[2]);
                         ServerThread thread = clients.get(i);
                         thread.OutPut(string[0] + "(" + clients.get(i).socket.getRemoteSocketAddress() + ") :" + string[2]);
                     }
                 }
-            }
-            if (b) {
-                System.out.println("失败");
-                for (int i = 0; i < clients.size(); i++) {
-                    if (socket == clients.get(i).socket) {
-                        ServerThread thread = clients.get(i);
-                        thread.OutPut("发送给(" + clients.get(i).socket.getRemoteSocketAddress() + ")发送失败");
+                if (b) {
+                    System.out.println("    -|失败----");
+                    for (int k = 0; k < clients.size(); k++) {
+                        if (socket == clients.get(k).socket) {
+                            ServerThread thread = clients.get(k);
+                            thread.OutPut("发送给(" + s1[j] + ")发送失败");
+                        }
                     }
                 }
             }
+
         }
     
         public void OutPut(String string) {

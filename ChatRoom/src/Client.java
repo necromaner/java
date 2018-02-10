@@ -10,6 +10,16 @@ import java.util.Scanner;
 
 import static java.net.InetAddress.getLocalHost;
 
+/**
+ * 群发：直接发送
+ * 单发：Address=-=发送内容
+ * 多发：Address-Address-Address=-=发送内容
+ *
+ * 命令：
+ * ==exit==     退出客户端
+ * ==name==     改名
+ * ==user==     查看所有在线用户的Address
+ */
 public class Client {
     private Socket socket;
     private PrintWriter writer = null;
@@ -29,9 +39,7 @@ public class Client {
 //            String port=input.nextLine();
             socket = new Socket(InetAddress.getLocalHost().getHostAddress(), 5000);
             System.out.println("连接成功");
-            System.out.println(socket);
-            System.out.print("请输入昵称： ");
-            name = input.nextLine();
+            System.out.println(socket.getLocalSocketAddress());
             if ("".equals(name)) {
                 name = InetAddress.getLocalHost().getAddress().toString();
             }
@@ -44,7 +52,11 @@ public class Client {
             System.out.println("连接失败");
         }
     }
-
+    public void ChangeName(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("请输入昵称： ");
+        this.name = input.nextLine();
+    }
     public class InPut extends Thread {
         Socket socket1;
         
@@ -56,8 +68,13 @@ public class Client {
             try {
                 while (true) {
                     String str = scanner.nextLine();
-                    System.out.println("发送 ："+str);
-                    writer.println(Agreement(str));
+    
+                    if ("==name==".equals(str))
+                        ChangeName();
+                    if ("==exit==".equals(str))
+                        Close();
+//                    String s=Agreement(str);
+                    writer.println(name + "=-=" + str);
                     writer.flush();
                 }
             } catch (Exception e) {
@@ -66,36 +83,7 @@ public class Client {
                 e.printStackTrace();
             }
         }
-        
-        /**
-         * 协议:
-         * ==exit==     关闭客户端
-         */
-        public String Agreement(String s) {
-            if ("==exit==".equals(s)) {
-                Close();
-                return "======ERROR======";
-            } else {
-                String[] s1 = s.split("=-=", 2);
-                if (s1.length == 2) {
-                    String[] s2 = s1[0].split("\\.");
-                    System.out.println("----2----" + s2.length);
-                    System.out.println();
-                    if (s2.length == 4) {
-                        String[] s3 = s2[3].split(":");
-                        System.out.println("----3----" + s3.length);
-                        if (s3.length == 2)
-                            return name + "|-=-=-=-|/" + s1[0] + "|-=-=-=-|" + s1[1];
-                    }
-                }
-                return name + "|-=-=-=-|" + "ALL" + "|-=-=-=-|" + s;
-            }
-        }
-        public void ChangeName(String name){
-        
-        }
     }
-    
     public class OutPut extends Thread {
         Socket socket1;
         
