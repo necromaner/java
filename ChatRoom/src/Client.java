@@ -17,8 +17,14 @@ import static java.net.InetAddress.getLocalHost;
  *
  * 命令：
  * ==exit==     退出客户端
- * ==name==     改名
  * ==user==     查看所有在线用户的Address
+ *
+ * 协议：
+ * 发送内容                    发送给所有人消息
+ * ALL=-=发送内容              发送给所有人消息
+ * Address=-=消息             发送给Address消息
+ * Address-Address=-=消息     发送给多个Address消息
+ * NAME=-=昵称                修改昵称
  */
 public class Client {
     private Socket socket;
@@ -69,12 +75,9 @@ public class Client {
                 while (true) {
                     String str = scanner.nextLine();
     
-                    if ("==name==".equals(str))
-                        ChangeName();
                     if ("==exit==".equals(str))
                         Close();
-//                    String s=Agreement(str);
-                    writer.println(name + "=-=" + str);
+                    writer.println(str);
                     writer.flush();
                 }
             } catch (Exception e) {
