@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Description:
@@ -14,7 +12,7 @@ public class Mysql {
     }
     public static void queryInfo()throws ClassNotFoundException,SQLException{
         Class.forName("com.mysql.jdbc.Driver");
-        Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/localhost","root","root");
+        Connection conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/chatroom?useUnicode=true&characterEncoding=utf-8&useSSL=false","root","root");
         String sql="select * from connect";
     }
     

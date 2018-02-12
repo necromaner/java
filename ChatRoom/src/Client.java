@@ -18,6 +18,7 @@ import static java.net.InetAddress.getLocalHost;
  * 命令：
  * ==exit==     退出客户端
  * ==user==     查看所有在线用户的Address
+ * ==help==     查看帮助
  *
  * 协议：
  * 发送内容                    发送给所有人消息
@@ -26,6 +27,7 @@ import static java.net.InetAddress.getLocalHost;
  * Address-Address=-=消息     发送给多个Address消息
  * NAME=-=昵称                修改昵称
  */
+
 public class Client {
     private Socket socket;
     private PrintWriter writer = null;
@@ -46,22 +48,13 @@ public class Client {
             socket = new Socket(InetAddress.getLocalHost().getHostAddress(), 5000);
             System.out.println("连接成功");
             System.out.println(socket.getLocalSocketAddress());
-            if ("".equals(name)) {
-                name = InetAddress.getLocalHost().getAddress().toString();
-            }
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             new OutPut(socket).start();
             new InPut(socket).start();
         } catch (Exception e) {
-            System.out.println("+++++++++++1++++++++++++");
-            System.out.println("连接失败");
+            System.out.println("服务器端Address错误或未启动");
         }
-    }
-    public void ChangeName(){
-        Scanner input = new Scanner(System.in);
-        System.out.print("请输入昵称： ");
-        this.name = input.nextLine();
     }
     public class InPut extends Thread {
         Socket socket1;
@@ -98,7 +91,10 @@ public class Client {
             try {
                 while (true) {
                     String string = reader.readLine();
-                    System.out.println("Client读到：" + string);
+                    if ("null".equals(string)){
+                        Close();
+                    }
+                    System.out.println(string);
                 }
             } catch (Exception e) {
                 System.out.println("+++++++++++3++++++++++++");
@@ -110,8 +106,6 @@ public class Client {
     
     public void Close() {
         try {
-            InPut.sleep(100);
-            OutPut.sleep(100);
             writer.close();
             reader.close();
             socket.close();
@@ -122,9 +116,6 @@ public class Client {
             System.out.println("+++++++++++4++++++++++++");
             System.out.println("关闭失败");
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(0);
         }
     }
 }

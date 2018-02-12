@@ -55,7 +55,7 @@ public class Server {
         private PrintWriter writer = null;
         private BufferedReader reader = null;
         private boolean close = false;
-        private String name="未设置昵称";
+        private String name="游客";
         
         public ServerThread(Socket socket) {
             this.socket = socket;
@@ -84,7 +84,6 @@ public class Server {
                 String string = reader.readLine();
                 String[] ss1 = string.split("=-=",2);
                 ss1=Regulation(ss1);
-                System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 发来消息 ：" + ss1[1]);
                 Agreement(ss1);
                 System.out.println("—————————————————————————————————————————");
             } catch (IOException e) {
@@ -108,13 +107,16 @@ public class Server {
         }
         public void Agreement(String[] s) {
             if ("ALL".equals(s[0])) {
-                if (!("==name==".equals(s[1]) || "==user==".equals(s[1]))) {
+                System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 群发消息 ：" + s[1]);
+                if (!("==name==".equals(s[1]) || "==user==".equals(s[1])||"==help==".equals(s[1]))) {
                     SendALL(s);
                 }
             }else if("NAME".equals(s[0])){
+                System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 修改昵称 ：" + s[1]);
                 System.out.println("修改昵称");
                 this.name=s[1];
             }else {
+                System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 多发消息 ：" + s[1]);
                 SendAppoint(s);
             }
             SendBack(s);
@@ -127,18 +129,28 @@ public class Server {
                         thread.OutPut("改名成功");
                     } else if ("==user==".equals(s[1])){
                         thread.OutPut("目前在线人数除去自己："+(clients.size()-1)+"人");
-                        
+                        int otherUser=0;
                         for (int j = 0; j < clients.size(); j++) {//查找除发送消息的客户端其他客户端
-                            int otherUser=0;
-                            System.out.println(otherUser+"--------");
-                            System.out.println(socket+"---"+clients.get(j).socket);
                             if (socket != clients.get(j).socket) {
-                                System.out.println(j+"---");
                                 otherUser++;
-                                thread.OutPut(otherUser+". "+clients.get(j).socket.getRemoteSocketAddress());
+                                thread.OutPut(otherUser+". 昵称："+clients.get(j).name+" Address:"+clients.get(j).socket.getRemoteSocketAddress());
                             }
                         }
-    
+                    } else if ("==help==".equals(s[1])){
+                        thread.OutPut(
+                                "----------------------help----------------------\n" +
+                                "命令：\n" +
+                                "==exit==     退出客户端\n" +
+                                "==user==     查看所有在线用户的Address\n" +
+                                "==help==     查看帮助\n" +
+                                "\n" +
+                                "协议：\n" +
+                                "发送内容                    发送给所有人消息\n" +
+                                "ALL=-=发送内容              发送给所有人消息\n" +
+                                "Address=-=消息             发送给Address消息\n" +
+                                "Address-Address=-=消息     发送给多个Address消息\n" +
+                                "NAME=-=昵称                修改昵称\n" +
+                                "------------------------------------------------");
                     }else
                         thread.OutPut("发送： " + s[1]);
                 }
@@ -167,7 +179,7 @@ public class Server {
         }
     
         public void SendAppoint(String[] string) {//发送给指定Address客户端
-            boolean b=true;
+            boolean b;
             System.out.println("--------指定发--------");
             String[] s1 = string[0].split("-");
             System.out.println("发送给" + s1.length + "个人");
@@ -186,7 +198,6 @@ public class Server {
                     }
                 }
                 if (b) {
-                    System.out.println("    -|失败----");
                     for (int k = 0; k < clients.size(); k++) {
                         if (socket == clients.get(k).socket) {
                             ServerThread thread = clients.get(k);
