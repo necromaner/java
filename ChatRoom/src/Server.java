@@ -3,6 +3,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -115,6 +116,19 @@ public class Server {
                 System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 修改昵称 ：" + s[1]);
                 System.out.println("修改昵称");
                 this.name=s[1];
+    
+            }else if("SIGNIN".equals(s[0])||"SIGNUP".equals(s[0])){
+                String ss1="未执行";
+                Mysql mysql=new Mysql();
+                try {
+                    ss1=mysql.SIGNIN(s);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(ss1);
+                s[1]=ss1;
             }else {
                 System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 多发消息 ：" + s[1]);
                 SendAppoint(s);
