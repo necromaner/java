@@ -12,6 +12,8 @@ import java.util.Scanner;
  * 消息转换：
  * 消息    ->   ALL=-=消息
  * 命令    ->   ALL=-=命令
+ * SIGNIN=-=账号=-=密码=-=昵称    ->  SIGNIN=-=账号=-=密码=-=昵称=-=Address
+ * SIGNUP=-=账号=-=密码          ->     SIGNUP=-=账号=-=密码=-=address
  * 通讯协议：
  * ALL=-=消息               发送给除自己以外所有人消息
  * ALL=-=命令
@@ -104,6 +106,9 @@ public class Server {
                 ss[0] = s[0];
                 ss[1] = s[1];
             }
+            if ("SIGNIN".equals(ss[0])||"SIGNUP".equals(ss[0])){
+                ss[1]=ss[1]+"=-="+socket.getRemoteSocketAddress();
+            }
             return ss;
         }
         public void Agreement(String[] s) {
@@ -117,7 +122,8 @@ public class Server {
                 System.out.println("修改昵称");
                 this.name=s[1];
     
-            }else if("SIGNIN".equals(s[0])||"SIGNUP".equals(s[0])){
+            }else if("SIGNIN".equals(s[0])){
+                System.out.println("执行SQL语句 执行 "+s[0]+" 操作");
                 String ss1="未执行";
                 Mysql mysql=new Mysql();
                 try {

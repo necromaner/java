@@ -31,7 +31,6 @@ public class Mysql {
      *          返回：注册失败！ 账号已存在！
      */
     public String SIGNIN(String[] s)throws ClassNotFoundException,SQLException {
-        String result = "";
         //1.加载驱动器
         Class.forName("com.mysql.jdbc.Driver");
         //2.获取连接
@@ -62,7 +61,7 @@ public class Mysql {
         ps.setString(4, s1[3]);
         ps.setInt(5, 1);
     
-    
+        int cnt=ps.executeUpdate();
         if (ps != null) {
             ps.close();
             ps = null;
@@ -71,7 +70,10 @@ public class Mysql {
             conn.close();
             conn = null;
         }
-        return result;
+        if (cnt!=0){
+            return "注册成功!  账号："+s1[0]+" 密码："+s1[1]+"  昵称："+s1[2];
+        }
+        return "发生未知问题";
     }
     
     public void QueryInfo()throws ClassNotFoundException,SQLException{//查询

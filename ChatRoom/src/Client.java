@@ -23,9 +23,11 @@ import static java.net.InetAddress.getLocalHost;
  * 协议：
  * 发送内容                    发送给所有人消息
  * ALL=-=发送内容              发送给所有人消息
- * Address=-=消息             发送给Address消息
- * Address-Address=-=消息     发送给多个Address消息
- * NAME=-=昵称                修改昵称
+ * Address=-=消息              发送给Address消息
+ * Address-Address=-=消息      发送给多个Address消息
+ * SIGNIN=-=账号=-=密码=-=昵称  注册
+ * SIGNUP=-=账号=-=密码         登录
+ * NAME=-=昵称                 修改昵称
  */
 
 public class Client {
@@ -33,7 +35,6 @@ public class Client {
     private PrintWriter writer = null;
     private BufferedReader reader = null;
     static Scanner scanner = new Scanner(System.in);
-    private String name = "";
     
     public static void main(String[] args) {
         new Client();
