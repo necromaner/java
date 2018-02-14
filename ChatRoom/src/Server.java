@@ -59,6 +59,7 @@ public class Server {
         private BufferedReader reader = null;
         private boolean close = false;
         private String name="游客";
+        private boolean login=false;
         
         public ServerThread(Socket socket) {
             this.socket = socket;
@@ -73,6 +74,9 @@ public class Server {
             }
         }
     
+        /**
+         * 输入线程
+         */
         public void run() {
             while (true) {
                 InPut();
@@ -98,6 +102,7 @@ public class Server {
             }
         }
         public String[] Regulation(String[] s) {//消息格式转换
+            System.out.println("---------------===------");
             String[] ss = new String[2];
             if (s.length==1){
                 ss[0] = "ALL";
@@ -108,9 +113,11 @@ public class Server {
             }
             if ("SIGNIN".equals(ss[0])||"SIGNUP".equals(ss[0])){
                 ss[1]=ss[1]+"=-="+socket.getRemoteSocketAddress();
+                System.out.println(ss[1]);
             }
             return ss;
         }
+        
         public void Agreement(String[] s) {
             if ("ALL".equals(s[0])) {
                 System.out.println("-|从 " + this.name + " (" + socket.getRemoteSocketAddress() + ") 群发消息 ：" + s[1]);
@@ -128,6 +135,19 @@ public class Server {
                 Mysql mysql=new Mysql();
                 try {
                     ss1=mysql.SIGNIN(s);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(ss1);
+                s[1]=ss1;
+            }else if("SIGNUP".equals(s[0])){
+                System.out.println("执行SQL语句 执行 "+s[0]+" 操作");
+                String ss1="未执行";
+                Mysql mysql=new Mysql();
+                try {
+                    ss1=mysql.SIGNUP(s);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (SQLException e) {
