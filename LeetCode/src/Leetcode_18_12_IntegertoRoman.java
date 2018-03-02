@@ -13,7 +13,7 @@ Input is guaranteed to be within the range from 1 to 3999.
 public class Leetcode_18_12_IntegertoRoman {//完成
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int num=0;
+        int num=100;
         String roman=solution.intToRoman(num);
         System.out.println("num is = "+num);
         System.out.println("Roman  = "+roman);

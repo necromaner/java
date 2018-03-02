@@ -21,7 +21,7 @@ return [0, 1].
 public class Leetcode_1_1_TwoSum {//完成
     public static void main(String[] args) {
         int[] nums = {2, 7, 11, 15};
-        int target = 9;
+        int target = 13;
         Solution solution=new Solution();
         int[] answer=solution.twoSum(nums,target);
         System.out.println("["+answer[0]+","+answer[1]+"]");

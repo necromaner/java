@@ -59,12 +59,11 @@ public class Mysql {
         sql = "insert into connect(account,password,name,address,login)values(?,?,?,?,?)";
         //3.sql预编译
         ps = conn.prepareStatement(sql);
-    
         ps.setString(1, s1[0]);
         ps.setString(2, s1[1]);
         ps.setString(3, s1[2]);
         ps.setString(4, s1[3]);
-        ps.setInt(5, 0Filr and Code TemplatesFilr and Code Templates);
+        ps.setInt(5, 0);
     
         int cnt=ps.executeUpdate();
         if (ps != null) {

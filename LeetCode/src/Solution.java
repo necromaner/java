@@ -820,28 +820,103 @@ public class Solution {
 //            }
 //        }
 //        return maxLength;
-            Stack<Integer> paranStack=new Stack<Integer>();
-            int maxLength=0;
-            int lastValidIndx=0;
-            for (int indx=0; indx<s.length(); indx++) {
-                if (s.charAt(indx)=='(') //遇到左括号，直接存入。
-                    paranStack.push(indx);
-                else { //遇到右括号，分情况讨论
-                    if (paranStack.empty()) //如果此时栈里左括号已经被消耗完了，没有额外的左括号用来配对当前的右括号了，那么当前的右括号就被单出来了，表明当前子串可以结束了，此时的右括号也成为了下一个group的分界点，此时右括号下标为index，所以下一个group的起始点为index+1,相当于skip掉当前的右括号。
-                        lastValidIndx=indx+1;
-                    else { //如果此时栈不空，可能有两种情况，1）栈正好剩下1个左括号和当前右括号配对 2)栈剩下不止1个左括号，
-                        paranStack.pop();
-                        if (paranStack.empty())  //栈pop()之前正好剩下1个左括号，pop()之后，栈空了，此时group长度为indx-lastValidIndx
+        Stack<Integer> paranStack = new Stack<Integer>();
+        int maxLength = 0;
+        int lastValidIndx = 0;
+        for (int indx = 0; indx < s.length(); indx++) {
+            if (s.charAt(indx) == '(') //遇到左括号，直接存入。
+                paranStack.push(indx);
+            else { //遇到右括号，分情况讨论
+                if (paranStack.empty()) //如果此时栈里左括号已经被消耗完了，没有额外的左括号用来配对当前的右括号了，那么当前的右括号就被单出来了，表明当前子串可以结束了，此时的右括号也成为了下一个group的分界点，此时右括号下标为index，所以下一个group的起始点为index+1,相当于skip掉当前的右括号。
+                    lastValidIndx = indx + 1;
+                else { //如果此时栈不空，可能有两种情况，1）栈正好剩下1个左括号和当前右括号配对 2)栈剩下不止1个左括号，
+                    paranStack.pop();
+                    if (paranStack.empty())  //栈pop()之前正好剩下1个左括号，pop()之后，栈空了，此时group长度为indx-lastValidIndx
 //                            maxLength=max(maxLength, indx-lastValidIndx+1);
-                            maxLength = maxLength > (indx - lastValidIndx + 1) ? maxLength : (indx - lastValidIndx + 1);
-                        else  //栈有pop()之前剩下不止1个左括号，此时额外多出的左括号使得新的group形成。如()(()())中index=4时，stack中有2个左括号
+                        maxLength = maxLength > (indx - lastValidIndx + 1) ? maxLength : (indx - lastValidIndx + 1);
+                    else  //栈有pop()之前剩下不止1个左括号，此时额外多出的左括号使得新的group形成。如()(()())中index=4时，stack中有2个左括号
 //                            maxLength=max(maxLength, indx-paranStack.top());
-                            maxLength = maxLength > (indx-paranStack.peek()) ? maxLength : (indx-paranStack.peek());
-                        
-                    }
+                        maxLength = maxLength > (indx - paranStack.peek()) ? maxLength : (indx - paranStack.peek());
+    
                 }
             }
-            return maxLength;
         }
+        return maxLength;
+    }
+    
+    public List<Integer> spiralOrder(int[][] matrix) {//54. Spiral Matrix
+        int xMIN = 0;
+        int xMAX = matrix[0].length - 1;
+        int yMIN = 0;
+        int yMAX = matrix.length - 1;
+        int num=0;
+        List<Integer> list = new ArrayList<Integer>();
+        while ((xMIN <= xMAX) && (yMIN <= yMAX)) {
+            switch (num){
+                case 0:
+                    for (int i = xMIN; i <= xMAX; i++) {//上
+                        list.add(matrix[xMIN][i]);
+                    }
+                    yMIN++;
+                    num=1;
+                    break;
+                case 1:
+                    for (int i = yMIN; i <= yMAX; i++) {//右
+                        list.add(matrix[i][yMAX]);
+                    }
+                    xMAX--;
+                    num=2;
+                    break;
+                case 2:
+                    for (int i = xMAX; i >= xMIN; i--) {//下
+                        list.add(matrix[xMAX + 1][i]);
+                    }
+                    yMAX--;
+                    num=3;
+                    break;
+                case 3:
+                    for (int i = yMAX; i >= yMIN; i--) {//左
+                        list.add(matrix[i][yMIN - 1]);
+                    }
+                    xMIN++;
+                    num=0;
+                    break;
+            }
+        }
+        return list;
+    }
+    public boolean canJump(int[] nums) {//39. Jump Game
+        int max=0;
+        for (int i = 0; i <= max; i++) {
+            if (nums[i]+i>max)
+                max=nums[i]+i;
+            if (max>=nums.length-1){
+                return true;
+            }
+        }
+        return false;
+    }
+    public List<Interval> merge(List<Interval> intervals) {//56. Merge Intervals
+        //start冒泡排序
+        for (int i = 0; i < ; i++) {
+            
+        }
+        for (int i = 0; i < intervals.size()-1; i++) {
+            for (int j = i+1; j < intervals.size(); j++) {
+                int x1=intervals.get(i).start;
+                int x2=intervals.get(j).start;
+                int y1=intervals.get(i).end;
+                int y2=intervals.get(j).end;
+                if (((x1<=x2)&& (y1<=y2)&&(y1>=x2))
+                    ||((x1>=x2)&& (y1>=y2)&& (x1<=y2)) ||((x1<=x2)&&(y1>=y2)) ||((x1>=x2)&&(y1<=y2))
+                        ) {
+                    intervals.get(i).start=x1<x2?x1:x2;
+                    intervals.get(i).end=y1>y2?y1:y2;
+                    intervals.remove(j);
+                    j--;
+                }
+            }
+        }
+        return intervals;
+    }
 }
-
