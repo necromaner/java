@@ -897,25 +897,25 @@ public class Solution {
         return false;
     }
     public List<Interval> merge(List<Interval> intervals) {//56. Merge Intervals
-        //start冒泡排序
-        for (int i = 0; i < ; i++) {
-            
-        }
-        for (int i = 0; i < intervals.size()-1; i++) {
+        boolean x=true;
+        for (int i = 0; i < intervals.size()-1;) {
             for (int j = i+1; j < intervals.size(); j++) {
                 int x1=intervals.get(i).start;
                 int x2=intervals.get(j).start;
                 int y1=intervals.get(i).end;
                 int y2=intervals.get(j).end;
-                if (((x1<=x2)&& (y1<=y2)&&(y1>=x2))
-                    ||((x1>=x2)&& (y1>=y2)&& (x1<=y2)) ||((x1<=x2)&&(y1>=y2)) ||((x1>=x2)&&(y1<=y2))
-                        ) {
+                if (((x1<=x2)&& (x2<=y1)) ||((x2<=x1)&& (x1<=y2))) {
                     intervals.get(i).start=x1<x2?x1:x2;
                     intervals.get(i).end=y1>y2?y1:y2;
                     intervals.remove(j);
                     j--;
+                    x=false;
                 }
             }
+            if (x){
+                i++;
+            }
+            x=true;
         }
         return intervals;
     }
