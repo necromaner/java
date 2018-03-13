@@ -928,4 +928,57 @@ public class Solution {
         }
         return nums.length;
     }
+    public boolean isValidSudoku(char[][] board) {//36. Valid Sudoku
+        if (board.length!=9)
+            return false;
+        for (int i = 0; i < board[i].length-1; i++) {
+            if (board[i].length!=9)
+                return false;
+        }
+        for (int i = 0; i < board.length; i++) {
+            int[] z1=new int[9];
+            int[] z2=new int[9];
+            for (int j = 0; j < board[i].length; j++) {
+                if (board[i][j]>'0'&&board[i][j]<='9'){
+                    int x=board[i][j]-'0'-1;
+                    if (z1[x]==0){
+                        z1[x]=1;
+                    }else return false;
+                }else if (board[i][j]!='.'){
+                    return false;
+                }
+                if (board[j][i]>'0'&&board[j][i]<='9'){
+                    int x=board[j][i]-'0'-1;
+                    if (z2[x]==0){
+                        z2[x]=1;
+                    }else return false;
+                }else if (board[j][i]!='.'){
+                    return false;
+                }
+            }
+//            System.out.println(z1[0]+" "+z1[1]+" "+z1[2]+" "+z1[3]+" "+z1[4]+" "+z1[5]+" "+z1[6]+" "+z1[7]+" "+z1[8]);
+//            System.out.println(z2[0]+" "+z2[1]+" "+z2[2]+" "+z2[3]+" "+z2[4]+" "+z2[5]+" "+z2[6]+" "+z2[7]+" "+z2[8]);
+        }
+        for (int i = 0; i < board.length; i+=3) {
+            for (int j = 0; j < board[i].length; j+=3) {
+                int[] z3=new int[9];
+                for (int k = i; k < i+3; k++) {
+                    for (int l = j; l < j+3; l++) {
+//                        System.out.println(i+" "+j+" "+k+" "+l);
+                        if (board[k][l]>'0'&&board[k][l]<='9'){
+                            int x=board[k][l]-'0'-1;
+                            if (z3[x]==0){
+                                z3[x]=1;
+                            }else return false;
+                        }else if (board[k][l]!='.'){
+                            return false;
+                        }
+
+                    }
+                }
+//                System.out.println(z3[0]+" "+z3[1]+" "+z3[2]+" "+z3[3]+" "+z3[4]+" "+z3[5]+" "+z3[6]+" "+z3[7]+" "+z3[8]);
+            }
+        }
+        return true;
+    }
 }
