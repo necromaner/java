@@ -981,4 +981,59 @@ public class Solution {
         }
         return true;
     }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {//39. Combination Sum
+        /*
+        思路：
+        准备：candidates排序去重去比target大的数
+        1.从最小的数相加，一直加到大于等于target，如果大于则上一位变大一位
+        
+        例： 2 3 4  9
+        2 2 2 2 2-大于
+        2 2 2 3-ok
+        2 2 3 3
+        2 2 4 4
+        2 3 3 3
+        2 3 4-ok
+        2 4 4
+        3 3 3-ok
+        3 4 4
+        
+        
+        
+        
+        4 4 4
+        4 4 3
+        4 4 2
+        4 3 3
+        4 3 2-ok
+        4 2 2 2
+        3 3 3-ok
+        3 3 2 2
+        3 2 2 2-ok
+        2 2 2 2 2
+         */
+        List<List<Integer>> answer = new ArrayList<List<Integer>>();
+        //排序
+        Arrays.sort(candidates);
+        if(candidates.length == 0 || candidates[0] > target)
+            return answer;
+        //去重,去比target大的数
+        Set<Integer> set = new TreeSet<Integer>();//新建一个set集合
+        for (int i = 0; i < candidates.length; i++) {
+            if (candidates[i]<=target)
+                set.add(candidates[i]);
+        }
+        Integer[] arr2 = set.toArray(new Integer[0]);
+        int[] result = new int[arr2.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = arr2[i];
+        }
+        
+//        for (int i = candidates.length-1; i >=0 ; i--) {
+//            if (candidates[i]<=target){
+//
+//            }
+//        }
+        return answer;
+    }
 }
