@@ -1,5 +1,9 @@
 package FirstDay_3_26;
 
+import org.omg.CORBA.Object;
+
+import java.util.Vector;
+
 /**
  * java类简单作用描述
  * Description:
@@ -126,6 +130,119 @@ Vector(Collection c)
  */
 public class T3_Vector {
     public static void main(String[] args) {
-    
+        Vector vector1=new Vector();//默认10
+        Vector vector2=new Vector(20);//创建一个大小为20的向量
+        Vector vector3=new Vector(30,5);
+        Vector vector4=new Vector();
+        Vector vector5=new Vector();
+        //Vector(Collection c)
+        vector1.add("one");//添加到末尾
+        vector1.add("two");
+        vector1.add("four");
+        System.out.println(vector1);
+        vector1.add(2,"Three");//第2个位置插入
+        System.out.println(vector1);
+        // 	boolean addAll(Collection c)将指定 Collection 中的所有元素添加到此向量的末尾，按照指定 collection 的迭代器所返回的顺序添加这些元素。
+        //boolean addAll(int index, Collection c)在指定位置将指定 Collection 中的所有元素插入到此向量中。
+        vector2.add("zero");
+        vector2.addElement(vector1);//将指定的组件添加到此向量的末尾，将其大小增加 1。
+        System.out.println("vector1 "+vector1);
+        System.out.println(vector2);
+        System.out.println(vector1.capacity());//返回此向量的当前容量。初始化定义的
+        System.out.println(vector2.capacity());//返回此向量的当前容量。
+        vector3=vector1;
+        System.out.println("vector1 "+vector1);
+        System.out.println(vector3);
+        vector3.clear();//删除所有
+        System.out.println(vector3);
+        System.out.println("vector1 "+vector1);
+        vector4=(Vector) vector1.clone();//副本。。。。。。。。。。错误
+        System.out.println(vector4);
+        System.out.println(vector1.contains("one"));//感觉跟==差不多，判断元素地址
+        System.out.println("vector1 "+vector1);
+        vector1.add(1);
+        vector1.add(2);
+        vector1.add(4);
+        vector1.add(3);
+        vector1.add("five");
+        System.out.println(vector1.contains(1));
+        System.out.println(vector2.contains(vector1));
+        
+//        10 	boolean containsAll(Collection c)
+//        如果此向量包含指定 Collection 中的所有元素，则返回 true。
+//        11 	void copyInto(Object[] anArray)
+//        将此向量的组件复制到指定的数组中。
+        System.out.println(vector1);
+        java.lang.Object vector1s=vector1.elementAt(3);
+        System.out.println(vector1s);
+//        13 	Enumeration elements()
+//        返回此向量的组件的枚举。
+//        14 	void ensureCapacity(int minCapacity)
+//        增加此向量的容量（如有必要），以确保其至少能够保存最小容量参数指定的组件数。
+        System.out.println(vector1.equals(vector2));
+        vector5=(Vector)vector1.clone();
+        System.out.println(vector1+"||"+vector5);
+        System.out.println(vector1.equals(vector5));
+//        16 	Object firstElement()
+//        返回此向量的第一个组件（位于索引 0) 处的项）。
+        System.out.println(vector1.firstElement());
+//        17 	Object get(int index)
+//        返回向量中指定位置的元素。
+        System.out.println(vector1.get(2));
+//        18 	int hashCode()
+//        返回此向量的哈希码值。
+        System.out.println(vector1.hashCode());
+//        19 	int indexOf(Object elem)
+//        返回此向量中第一次出现的指定元素的索引，如果此向量不包含该元素，则返回 -1。
+        System.out.println(vector1.indexOf("five"));
+        System.out.println(vector1.indexOf(7));
+//        20 	int indexOf(Object elem, int index)
+//        返回此向量中第一次出现的指定元素的索引，从 index 处正向搜索，如果未找到该元素，则返回 -1。
+        System.out.println(vector1.indexOf(2,2));
+        System.out.println(vector1.indexOf("five",1));
+//        21 	void insertElementAt(Object obj, int index)
+//        将指定对象作为此向量中的组件插入到指定的 index 处。
+//        22 	boolean isEmpty()
+//        测试此向量是否不包含组件。
+//        23 	Object lastElement()
+//        返回此向量的最后一个组件。
+//        24 	int lastIndexOf(Object elem)
+//        返回此向量中最后一次出现的指定元素的索引；如果此向量不包含该元素，则返回 -1。
+//        25 	int lastIndexOf(Object elem, int index)
+//        返回此向量中最后一次出现的指定元素的索引，从 index 处逆向搜索，如果未找到该元素，则返回 -1。
+//        26 	Object remove(int index)
+//        移除此向量中指定位置的元素。
+//        27 	boolean remove(Object o)
+//        移除此向量中指定元素的第一个匹配项，如果向量不包含该元素，则元素保持不变。
+//        28 	boolean removeAll(Collection c)
+//        从此向量中移除包含在指定 Collection 中的所有元素。
+//        29 	void removeAllElements()
+//        从此向量中移除全部组件，并将其大小设置为零。
+//        30 	boolean removeElement(Object obj)
+//        从此向量中移除变量的第一个（索引最小的）匹配项。
+//        31 	void removeElementAt(int index)
+//        删除指定索引处的组件。
+//        32 	protected void removeRange(int fromIndex, int toIndex)
+//        从此 List 中移除其索引位于 fromIndex（包括）与 toIndex（不包括）之间的所有元素。
+//        33 	boolean retainAll(Collection c)
+//        在此向量中仅保留包含在指定 Collection 中的元素。
+//        34 	Object set(int index, Object element)
+//        用指定的元素替换此向量中指定位置处的元素。
+//        35 	void setElementAt(Object obj, int index)
+//        将此向量指定 index 处的组件设置为指定的对象。
+//        36 	void setSize(int newSize)
+//        设置此向量的大小。
+//        37 	int size()
+//        返回此向量中的组件数。
+//        38 	List subList(int fromIndex, int toIndex)
+//        返回此 List 的部分视图，元素范围为从 fromIndex（包括）到 toIndex（不包括）。
+//        39 	Object[] toArray()
+//        返回一个数组，包含此向量中以恰当顺序存放的所有元素。
+//        40 	Object[] toArray(Object[] a)
+//        返回一个数组，包含此向量中以恰当顺序存放的所有元素；返回数组的运行时类型为指定数组的类型。
+//        41 	String toString()
+//        返回此向量的字符串表示形式，其中包含每个元素的 String 表示形式。
+//        42 	void trimToSize()
+//        对此向量的容量进行微调，使其等于向量的当前大小。
     }
 }
