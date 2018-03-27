@@ -61,5 +61,10 @@ public class T1_Enumeration {
         for (int i = 0; i < newDayName.size(); i++) {
             System.out.print(newDayName.get(i)+" ");
         }
+        StringBuffer sb=new StringBuffer("[");
+        for (String s:newDayName)
+            sb.append(s+", ");
+        System.out.println(sb.delete(sb.length()-2,sb.length()).append("]").toString());
+        
     }
 }
