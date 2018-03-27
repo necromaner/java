@@ -34,6 +34,8 @@ Arrays.sort()        排序（升序）
 
 System.arraycopy(源数组名称，源数组开始点， 目标数组名称，目标数组开始点，拷贝长度)  数组替换数组部分内容（把源中部分内容给目标）
 
+StringBuffer		经常变化字符串比String快
+
 
 
 

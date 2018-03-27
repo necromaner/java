@@ -76,8 +76,31 @@ public class T8_DataStructure {
         linkedList.removeFromTail();
         linkedList.traverse();
         linkedList.insert(3,100);
-    
         linkedList.traverse();
+        linkedList.remove(4);
+        linkedList.traverse();
+        System.out.println(linkedList.indexOf(100));
+        System.out.println(linkedList.contains(4));
+    
+        System.out.println("队列:");
+        /*
+        队列是一个常用的数据结构，是一种先进先出（First In First Out, FIFO）的结构，也就是说只能在表头进行删除，在表尾进行添加，下面我们实现一个简单的队列。
+        队列只能在表头进行删除，在表尾进行增加，这种结构的特点，适用于排队系统。
+         */
+        Queue queue=new Queue();
+        queue.add("a");
+        queue.add("b");
+        queue.add("c");
+        queue.add("d");
+        queue.add("e");
+        System.out.println(queue.element());
+        queue.remove();
+        System.out.println(queue.element());
+        System.out.println(queue);
+        System.out.println("栈:");
+        /*
+        栈是一种后进先出（Last In First Out，LIFO）的数据结构，我们采用单链表实现一个栈。
+         */
     }
     public static int[] insert(int[] old,int value,int index){//插入
         int[] n=new int[old.length+1];
