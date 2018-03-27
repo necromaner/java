@@ -81,6 +81,17 @@ public class LinkedList<T> {
             System.out.println("");
         }
     }
+    public String toString() {//打印
+        if (isEmpty()) {
+            return "[]";
+        } else {
+            StringBuffer sb=new StringBuffer("[");
+            for (Node<T> p = head; p != null; p = p.next){
+                sb.append(p.data+", ");
+            }
+            return sb.delete(sb.length()-2,sb.length()).append("]").toString();
+        }
+    }
     
     /**
      * insert node from head

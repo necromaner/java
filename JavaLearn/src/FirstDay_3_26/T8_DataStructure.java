@@ -51,6 +51,7 @@ public class T8_DataStructure {
         // traverse(value);
         // insert(value, 666, 5);
         traverse(value);
+        System.out.println(traverse1(value));
         value=delete(value, 2);
         traverse(value);
         value=delete(value, 2,3);
@@ -101,6 +102,17 @@ public class T8_DataStructure {
         /*
         栈是一种后进先出（Last In First Out，LIFO）的数据结构，我们采用单链表实现一个栈。
          */
+        Stack stack=new Stack();
+        stack.push(11);
+        stack.push(22);
+        stack.push(33);
+        stack.push(44);
+        stack.push(55);
+        System.out.println(stack);
+        stack.pop();
+        System.out.println(stack);
+        
+        System.out.println(stack.search(22));
     }
     public static int[] insert(int[] old,int value,int index){//插入
         int[] n=new int[old.length+1];
@@ -129,9 +141,16 @@ public class T8_DataStructure {
                 System.out.print("-");
         }
         System.out.println();
-        
     }
-////    public static void traverse(int data[]) {
+    
+    public static String traverse1(int data[]) {
+        StringBuffer sb=new StringBuffer("[");
+        for (int i:data) {
+            sb.append(i+", ");
+        }
+        return sb.delete(sb.length()-2,sb.length()).append("]").toString();
+    }
+    ////    public static void traverse(int data[]) {
 //        for (int j = 0; j < data.length; j++)
 //            System.out.print(data[j] + " ");
 //        System.out.println();
