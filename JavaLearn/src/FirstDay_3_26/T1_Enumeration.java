@@ -44,8 +44,9 @@ public class T1_Enumeration {
         //elements():返回此向量的组件的枚举。返回此向量的组件的枚举。返回的 Enumeration 对象将生成此向量中的所有项。生成的第一项为索引 0 处的项，然后是索引 1 处的项，依此类推。
         days=dayName.elements();
         while (days.hasMoreElements()){
-            System.out.println(days.nextElement());
+            System.out.print(days.nextElement()+" ");
         }
+        System.out.println("");
         System.out.println(dayName);
         
         List<String> newDayName=new ArrayList<String>();
@@ -61,6 +62,7 @@ public class T1_Enumeration {
         for (int i = 0; i < newDayName.size(); i++) {
             System.out.print(newDayName.get(i)+" ");
         }
+        System.out.println("");
         StringBuffer sb=new StringBuffer("[");
         for (String s:newDayName)
             sb.append(s+", ");

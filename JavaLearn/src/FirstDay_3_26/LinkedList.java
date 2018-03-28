@@ -143,11 +143,12 @@ public class LinkedList<T> {
      * @param item
      * @return
      */
-    public boolean insert(T appointedItem, T item) {//插入(位置，内容）
+    public boolean insert(T appointedItem, T item) {//插入(插入后的内容，内容）
         Node<T> prev = head, curr = head.next, newNode;
         newNode = new Node<T>(item);
         if (!isEmpty()) {
             while ((curr != null) && (!appointedItem.equals(curr.data))) {//不为空且appointedItem值不等于位置的索引值,找到插入点
+                //(!appointedItem.equals(curr.data))appointedItem与head.next.data判断相等]
                 prev = curr;
                 curr = curr.next;
             }

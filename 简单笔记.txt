@@ -43,6 +43,10 @@ StringBuffer		经常变化字符串比String快
         return sb.delete(sb.length()-2,sb.length()).append("]").toString();
     }
 
+/Users/necromaner/java
 
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));从控制台读取字符
+c = (转换类型) br.readLine();
+c = (转换类型) br.read();
 
 

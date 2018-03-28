@@ -1,1 +1,0 @@
-NullPointerException    当应用程序试图在需要对象的地方使用 null 时，抛出该异常。（声明但没有实例化）

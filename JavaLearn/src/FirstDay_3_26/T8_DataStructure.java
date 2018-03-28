@@ -63,7 +63,7 @@ public class T8_DataStructure {
         LinkedList linkedList=new LinkedList();
         linkedList.addHead(1);
         linkedList.addTail(2);
-        linkedList.addTail(3);
+        linkedList.addTail(30);
         linkedList.addTail(4);
         linkedList.addTail(9);
         linkedList.addTail(8);
@@ -76,7 +76,7 @@ public class T8_DataStructure {
         linkedList.traverse();
         linkedList.removeFromTail();
         linkedList.traverse();
-        linkedList.insert(3,100);
+        linkedList.insert(30,100);
         linkedList.traverse();
         linkedList.remove(4);
         linkedList.traverse();
