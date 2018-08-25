@@ -9,10 +9,14 @@
  */
 public class test {
     public static void main(String[] args) {
-        int a=5;
-        int b=a++;
-        int c=--a;
-        System.out.println(a+" "+b+" "+c+" ");
-        System.out.println(new test()==new test());
+//        int a=5;
+//        int b=a++;
+//        int c=--a;
+//        System.out.println(a+" "+b+" "+c+" ");
+//        System.out.println(new test()==new test());
+        for (int i = 0; i < 200; i++) {
+            char a= (char) i;
+            System.out.println(i+" = "+a);
+        }
     }
 }
